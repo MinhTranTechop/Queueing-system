@@ -5,7 +5,7 @@ import group from "../assets/Group341.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-const SignIn :React.FC = () => {
+const SignIn : React.FC = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,9 +47,9 @@ const SignIn :React.FC = () => {
           </div>
         </form>
         <div>
-          <button className="btnDN" type="submit">
+          <Link className="link-nav" to='/profile'><button className="btnDN" type="submit">
             Đăng nhập
-          </button>
+          </button></Link>
         </div>
       </div>
       <div className="pritureLogin">

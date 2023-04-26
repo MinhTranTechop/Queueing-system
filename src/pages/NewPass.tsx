@@ -4,7 +4,7 @@ import logoAlta from "../assets/logo.png";
 import Frame from "../assets/Frame.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
+import {Link} from 'react-router-dom'
 // interface PasswordInputProps {
 //   label: string;
 // }
@@ -58,7 +58,7 @@ const NewPass: React.FC = () => {
               type={inputType1}
               id="password"
               value={password1}
-              onChange={(e) => setPassword1(e.target.value)}
+              onChange={(e) => setPassword1(e.target.value)} 
             />
           </label>
           <div className='eyes'>
@@ -71,9 +71,9 @@ const NewPass: React.FC = () => {
           </div>
         </form>
         <div>
-          <button className="btnXN" type="submit">
+        <Link to='/login'><button className="btnXN" type="submit">
             Xác nhận
-          </button>
+          </button></Link>
         </div>
       </div>
       <div className="pritureForget">

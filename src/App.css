@@ -5,6 +5,7 @@
 }
 :root {
   --colormain: #ff9138;
+  --colorpage: #F7F7F7;
 }
 p {
   height: 27px;
@@ -13,7 +14,7 @@ p {
 
   font-family: "Nunito";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400px;
   font-size: 18px;
   line-height: 27px;
   /* identical to box height, or 150% */
@@ -25,4 +26,7 @@ p {
   flex: none;
   order: 0;
   flex-grow: 0;
+}
+input{
+  maxlength:1000px;
 }
