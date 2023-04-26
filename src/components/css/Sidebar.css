@@ -1,0 +1,11 @@
+.d-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 250px;
+    background-color: white;
+}
+.logomain{
+    width: 100px;
+    height: 100px;
+}
