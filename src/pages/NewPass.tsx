@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './css/NewPass.css';
+import React, { useState } from "react";
+import "./css/NewPass.css";
 import logoAlta from "../assets/logo.png";
 import Frame from "../assets/Frame.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 // interface PasswordInputProps {
 //   label: string;
 // }
@@ -24,7 +24,7 @@ const NewPass: React.FC = () => {
   const toggleShowPassword1 = () => {
     setShowPassword1(!showPassword1);
   };
-  
+
   const inputType1 = showPassword1 ? "text" : "password";
   return (
     <div className="wrapper">
@@ -33,23 +33,23 @@ const NewPass: React.FC = () => {
           <img className="logologin" src={logoAlta} alt="Logo" />
         </div>
 
-        <p className='change_wrapper'>Đặt mật khẩu mới</p>
+        <p className="change_wrapper">Đặt mật khẩu mới</p>
         <form className="change-form">
           <label className="label_login">
-            <p>Mật khẩu  </p>
+            <p>Mật khẩu </p>
             <input
               className="usertext"
               type={inputType}
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <div className='eyes'>
-          <FontAwesomeIcon
-          icon={showPassword ? faEyeSlash : faEye}
-          onClick={toggleShowPassword}
-        />
+          <div className="eyes">
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              onClick={toggleShowPassword}
+            />
           </div>
           <label className="label_pass">
             <p>Nhập lại mật khẩu *</p>
@@ -58,22 +58,23 @@ const NewPass: React.FC = () => {
               type={inputType1}
               id="password"
               value={password1}
-              onChange={(e) => setPassword1(e.target.value)} 
+              onChange={(e) => setPassword1(e.target.value)}
             />
           </label>
-          <div className='eyes'>
-          <FontAwesomeIcon
-          icon={showPassword1 ? faEyeSlash : faEye}
-          onClick={toggleShowPassword1}
-        />
+          <div className="eyes">
+            <FontAwesomeIcon
+              icon={showPassword1 ? faEyeSlash : faEye}
+              onClick={toggleShowPassword1}
+            />
           </div>
-          <div>
-          </div>
+          <div></div>
         </form>
         <div>
-        <Link to='/login'><button className="btnXN" type="submit">
-            Xác nhận
-          </button></Link>
+          <Link to="/login">
+            <button className="btnXN" type="submit">
+              Xác nhận
+            </button>
+          </Link>
         </div>
       </div>
       <div className="pritureForget">

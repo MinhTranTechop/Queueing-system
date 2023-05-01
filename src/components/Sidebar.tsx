@@ -9,6 +9,7 @@
   import dashboard from '../assets/element-4.png'
   import {Link} from 'react-router-dom'
   import iconlogout from "../assets/fi_log-out.png"
+  import veto from '../assets/vertical.png'
   const Navbar:React.FC = () => {
     
     return (
@@ -24,14 +25,14 @@
       <li className="nav-item">
         <a href="#" className="nav-link link-dark " aria-current="page">
           <img src={dashboard}/>
-          <svg className="bi me-2 " width="16" height="16"></svg>
+          <svg className="bi me-2 " width="9" height="16"></svg>
           Dashboard
         </a>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">
         <img src={item}/>
-          <svg className="bi me-2" width="16" height="16"></svg>
+          <svg className="bi me-2" width="9" height="16"></svg>
           
           Thiết bị  
         </a>
@@ -39,30 +40,31 @@
       <li>
         <a href="#" className="nav-link link-dark">
         <img src={service}/>
-          <svg className="bi me-2" width="16" height="16"></svg>
+          <svg className="bi me-2" width="9" height="16"></svg>
           Dịch vụ
         </a>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">
         <img src={number}/>
-          <svg className="bi me-2" width="16" height="16"></svg>
+          <svg className="bi me-2" width="9" height="16"></svg>
           Cấp số 
         </a>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">
         <img src={report}/>
-          <svg className="bi me-2" width="16" height="16"></svg>
+          <svg className="bi me-2" width="9" height="16"></svg>
           Báo cáo
         </a>
       </li>
       <li>
       <div className="dropdown">
-        <a href="#" className="nav-link link-dark dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+        <a href="#" className="nav-link link-dark " id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
         <img src={setting}/>
-          <svg className="bi me-2" width="16" height="16"></svg>
-          Cài đặt hệ thống 
+          <svg className="bi me-2" width="9" height="16"></svg>
+          Cài đặt hệ thống <img src={veto}/>
+        
         </a>
         <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
         <li><a className="dropdown-item" href="#">Quản lý vai trò</a></li>

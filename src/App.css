@@ -5,7 +5,7 @@
 }
 :root {
   --colormain: #ff9138;
-  --colorpage: #F7F7F7;
+  --colorpage: #f7f7f7;
 }
 p {
   height: 27px;
@@ -26,7 +26,4 @@ p {
   flex: none;
   order: 0;
   flex-grow: 0;
-}
-input{
-  maxlength:1000px;
 }

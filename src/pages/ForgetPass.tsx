@@ -2,8 +2,8 @@ import React from "react";
 import "./css/ForgetPass.css";
 import logoAlta from "../assets/logo.png";
 import Frame from "../assets/Frame.png";
-import {Link} from"react-router-dom"
-const ForgetPass :React.FC  = () => {
+import { Link } from "react-router-dom";
+const ForgetPass: React.FC = () => {
   return (
     <div className="wrapper">
       <div className="forget_wrapper">
@@ -21,12 +21,18 @@ const ForgetPass :React.FC  = () => {
         </form>
         <div>
           <div className="btnForget">
-           <Link className="link-nav" to="/login"> <button className="btnHuy" type="submit">
-              Hủy
-            </button></Link>
-           <Link className="link-nav" to="/Changepass"> <button className="btnTT" type="submit">
-              Tiếp tục
-            </button></Link>
+            <Link className="link-nav" to="/login">
+              {" "}
+              <button className="btnHuy" type="submit">
+                Hủy
+              </button>
+            </Link>
+            <Link className="link-nav" to="/Changepass">
+              {" "}
+              <button className="btnTT" type="submit">
+                Tiếp tục
+              </button>
+            </Link>
           </div>
         </div>
       </div>

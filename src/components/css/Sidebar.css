@@ -1,74 +1,70 @@
-.menubar{
+.menubar {
     position: relative;
     width: 200px;
     height: 700px;
-    
+
     /* White */
-    
-    background: #FFFFFF;
+
+    background: #ffffff;
     /* Dropdown */
-    
+
     box-shadow: 0px 4px 6px rgba(219, 219, 219, 0.5);
     border-radius: 16px 0px 0px 16px;
 }
-.logomain{
+.logomain {
     position: absolute;
     width: 80px;
     height: 64px;
     left: 60px;
     top: 32px;
 }
-.nav{
+.nav {
     position: absolute;
-width: 200px;
-height: 48px;
-left: 0px;
-top: 150px;
+    width: 200px;
+    height: 48px;
+    left: 0px;
+    top: 150px;
 
-border-radius: 8px;
+    border-radius: 8px;
 }
-.nav-link{
-    
-    
-    
-    font-family: 'Nunito';
+.nav-link {
+    font-family: "Nunito";
     font-style: normal;
     font-weight: 600px;
     font-size: 16px;
     line-height: 24px;
-    
-    
-    color: #7E7D88;
-    
-    
-    /* Inside auto layout */
-    
-    
 
+    color: #7e7d88;
+
+    /* Inside auto layout */
 }
-.logout{
+.logout {
     position: absolute;
     width: 200px;
     height: 46px;
     left: 0px;
     top: 630px;
 }
-.btnlogout{
+.btnlogout {
     display: flex;
-flex-direction: row;
-align-items: center;
-padding: 12px;
-gap: 12px;
-border: 2px solid white;
-position: absolute;
-width: 176px;
-height: 48px;
-left: 12px;
-top: 0px;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+    border: 2px solid white;
+    position: absolute;
+    width: 176px;
+    height: 48px;
+    left: 12px;
+    top: 0px;
 
-/* Orange/$-Orange-50 */
+    /* Orange/$-Orange-50 */
 
-background: #FFF2E7;
-border-radius: 8px;
-color: var(--colormain);
+    background: #fff2e7;
+    border-radius: 8px;
+    color: var(--colormain);
+}
+.dropdown-menu {
+    position: absolute;
+    left: 50px;
 }
