@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import logoAlta from "../assets/logo.png";
 import "./css/SignIn.css";
 import group from "../assets/Group341.png";
-import { Link, Navigate , useNavigate  } from "react-router-dom";
+import { Link , useNavigate  } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { ref, child, get } from "firebase/database";
 import  {database , auth }  from "../firebase";
-
+import waring from "../assets/warning.png";
 
 
 
@@ -56,7 +56,7 @@ get(child(dbRef, `users`)).then((snapshot) => {
         return;
       }
       // Login successful
-      navigate('/profile/${userId}');
+      navigate(`/profile/${userId}`);
   
 
       
@@ -83,18 +83,28 @@ const [showPassword, setShowPassword] = useState(false);
         <form className="login-form">
           <label className="label_login">
             <p>Tên đăng nhập *</p>
-            <input className="usertext" type="text"value={userName} onChange={(e) => setUserName(e.target.value)} />
+        {error?
+        <input className="usertextError" type="text"value={userName} onChange={(e) => setUserName(e.target.value)} />
+        :<input className="usertext" type="text"value={userName} onChange={(e) => setUserName(e.target.value)} />}
           </label>
           <label className="label_pass">
             <p>Mật khẩu *</p>
+            {error?<input
+              className="passtextError"
+              type={inputType}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value) }
+            />:
             <input
               className="passtext"
               type={inputType}
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value) }
-            />
+            />}
           </label>
+          
           <div className="eyes">
             <FontAwesomeIcon
               icon={showPassword ? faEyeSlash : faEye}
@@ -104,8 +114,9 @@ const [showPassword, setShowPassword] = useState(false);
           <div>
             <Link to="/ForgetPass">
               <label className="forgetPass">
-                {error && <p>{error}</p>}
-                <span>Quên mật khẩu?</span>
+               {error ?<div className="errorFP"> <img src={waring}/>  <p className="errorCode">{error}</p></div>:
+               <span>Quên mật khẩu?</span>
+              }
                 
               </label>
             </Link>
@@ -118,8 +129,11 @@ const [showPassword, setShowPassword] = useState(false);
             </button>
            
         <div>
-          
-          
+        <Link className="link-nav" to="/ForgetPass">
+              <label className="forgetPassnew">
+          {error? <span>Quên mật khẩu?</span>: <span></span>}
+          </label>
+            </Link>
         </div>
       </div>
       <div className="pritureLogin">

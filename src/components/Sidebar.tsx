@@ -1,4 +1,4 @@
-  import React from 'react';
+  import React, {useState} from 'react';
   import './css/Sidebar.css';
   import logoAlta from '../assets/logo.png';
   import setting from '../assets/setting.png'
@@ -11,7 +11,23 @@
   import iconlogout from "../assets/fi_log-out.png"
   import veto from '../assets/vertical.png'
   const Navbar:React.FC = () => {
-    
+
+  const nav = document.querySelectorAll('a');
+  
+  nav.forEach(element=>{
+    element.addEventListener("click",function(){
+      nav.forEach(nav=>nav.classList.remove("active"))
+      this.classList.add("active")
+    })
+  }) 
+  
+  
+    const [isActive, setIsActive] = useState(false);
+  
+    const toggleDropdown = () => {
+      setIsActive(!isActive);
+    };
+  
     return (
       <div>
  <div className="menubar " >
@@ -23,19 +39,19 @@
     
     <ul className="nav ">
       <li className="nav-item">
-        <a href="#" className="nav-link link-dark " aria-current="page">
+        <a href="#" className="nav-link link-dark active " aria-current="page">
           <img src={dashboard}/>
           <svg className="bi me-2 " width="9" height="16"></svg>
           Dashboard
         </a>
       </li>
       <li>
-        <a href="#" className="nav-link link-dark">
+        <Link className='link-nav' to="/ListEq"><a href="#" className="nav-link link-dark">
         <img src={item}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           
           Thiết bị  
-        </a>
+        </a></Link>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">
@@ -59,19 +75,24 @@
         </a>
       </li>
       <li>
-      <div className="dropdown">
-        <a href="#" className="nav-link link-dark " id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+      <div className="dropdown" onClick={toggleDropdown}>
+      
+        <a href="#" className="nav-link link-dark " >
         <img src={setting}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           Cài đặt hệ thống <img src={veto}/>
         
         </a>
-        <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-        <li><a className="dropdown-item" href="#">Quản lý vai trò</a></li>
-        <li><a className="dropdown-item" href="#">Quản lý tài khoản</a></li>
-        <li><a className="dropdown-item" href="#">Nhật ký người dùng</a></li>
+        
+      
+      <div className={`dropdown-menu${isActive ? " show" : ""}`}>
+        <ul className="link_name" aria-labelledby="dropdownUser2">
+        <li><p className="dropdown-item " >Quản lý vai trò</p></li>
+        <li><p className="dropdown-item " >Quản lý tài khoản</p></li>
+        <li><p className="dropdown-item " >Nhật ký người dùng</p></li>
 
       </ul>
+        </div>
         </div>
       </li>
     </ul>

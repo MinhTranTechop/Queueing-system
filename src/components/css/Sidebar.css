@@ -20,7 +20,7 @@
 }
 .nav {
     position: absolute;
-    width: 200px;
+    
     height: 48px;
     left: 0px;
     top: 150px;
@@ -28,6 +28,8 @@
     border-radius: 8px;
 }
 .nav-link {
+    width: 200px;
+    margin-top:10px;
     font-family: "Nunito";
     font-style: normal;
     font-weight: 600px;
@@ -37,6 +39,14 @@
     color: #7e7d88;
 
     /* Inside auto layout */
+}
+.nav-link:hover{
+    background-color: #FF7506;
+    color: white;
+}
+.nav a.active{
+    color: white;
+    background-color: #FF7506;
 }
 .logout {
     position: absolute;
@@ -64,7 +74,69 @@
     border-radius: 8px;
     color: var(--colormain);
 }
-.dropdown-menu {
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+ 
+  
+  .dropdown-menu {
     position: absolute;
-    left: 50px;
-}
+    top: 100%;
+    left: 0;
+    display: none;
+    z-index: 1;
+  }
+  
+  .dropdown-menu.show  {
+    display: block;
+    left: 200px;
+    top: 11px;
+    height: 128px;
+    width: 200px;
+    border-radius: 0px 12px 12px 0px;
+  }
+  
+  .dropdown-menu ul {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap:10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .dropdown-menu li {
+    
+    margin-top: -8px;
+    padding: 7px 16px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: var(--colormainBold);
+    color: white;
+    border-radius: 0px 12px 0px 0px;
+    
+  }
+  .dropdown-item{
+    
+    padding-top: 5px;
+    height: 11px;
+    padding-left: 10px;
+    
+  }
+  .dropdown-item:hover{
+    
+    background-color:  var(--colormainBold);
+    color: white;
+  }
+ 
+
+ 
+   
+

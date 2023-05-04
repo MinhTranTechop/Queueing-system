@@ -4,12 +4,30 @@ import logoAlta from "../assets/logo.png";
 import Frame from "../assets/Frame.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import {   useParams , useNavigate} from "react-router-dom";
+import {database} from "../firebase"
+import { update , ref  } from "@firebase/database";
+
 // interface PasswordInputProps {
 //   label: string;
 // }
-
+interface User {
+  userName: string;
+  password: string;
+  email :string;
+}
 const NewPass: React.FC = () => {
+  const navigate = useNavigate();
+  const { userId } = useParams<{ userId: string }>();
+  const handleResetPassword =  () => {
+   
+    update(ref(database,`users/${userId}`),{
+        password:password,
+      
+    });
+    navigate('/login')
+  };
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -56,7 +74,7 @@ const NewPass: React.FC = () => {
             <input
               className="passtext"
               type={inputType1}
-              id="password"
+              id="password1"
               value={password1}
               onChange={(e) => setPassword1(e.target.value)}
             />
@@ -70,11 +88,11 @@ const NewPass: React.FC = () => {
           <div></div>
         </form>
         <div>
-          <Link to="/login">
-            <button className="btnXN" type="submit">
+          
+            <button className="btnXN" type="submit" onClick={handleResetPassword}>
               Xác nhận
             </button>
-          </Link>
+          
         </div>
       </div>
       <div className="pritureForget">

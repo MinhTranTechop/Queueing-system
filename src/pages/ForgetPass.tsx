@@ -1,9 +1,50 @@
-import React from "react";
+import React , {useState} from "react";
 import "./css/ForgetPass.css";
 import logoAlta from "../assets/logo.png";
 import Frame from "../assets/Frame.png";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
+import  {database  }  from "../firebase";
+interface User {
+  userName: string;
+  email: string;
+}
+
 const ForgetPass: React.FC = () => {
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const handleLogin = async () => {
+    try {
+      const userRef = database.ref("users").orderByChild("email").equalTo(email);
+      const snapshot = await userRef.once("value");
+      const userData = snapshot.val();
+      if (!userData) {
+        
+        setError("không tồn tại email");
+        console.log(userData)
+        return;
+      }
+      
+       const userId = Object.keys(userData)[0];
+     const user = userData[userId] as User;
+      if (user.email.toString() !== email) {
+        console.log(user)
+        setError("không tồn tại email ");
+        
+        return;
+      }
+      // Login successful
+      navigate(`/Changepass/${userId}`);
+  
+
+      
+      
+    } catch (error) {
+      console.error(error);
+      setError("Something went wrong");
+    }
+  };
   return (
     <div className="wrapper">
       <div className="forget_wrapper">
@@ -14,7 +55,7 @@ const ForgetPass: React.FC = () => {
           <label className="label_forget">
             <h3 className="passname">Đặt lại mật khẩu</h3>
             <p>Vui lòng nhập email để đặt lại mật khẩu của bạn *</p>
-            <input className="emailtext" type="text" />
+            <input className="emailtext" type="text" onChange={(e) => setEmail(e.target.value)} />
           </label>
 
           <div></div>
@@ -27,12 +68,12 @@ const ForgetPass: React.FC = () => {
                 Hủy
               </button>
             </Link>
-            <Link className="link-nav" to="/Changepass">
+
               {" "}
-              <button className="btnTT" type="submit">
+              <button className="btnTT" type="submit" onClick={handleLogin}>
                 Tiếp tục
               </button>
-            </Link>
+           {error }
           </div>
         </div>
       </div>

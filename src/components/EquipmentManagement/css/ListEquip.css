@@ -1,0 +1,124 @@
+.List_name {
+    color: var(--colormainBold);
+}
+.ListEq_form {
+    position: absolute;
+    top: 100px;
+    left: 240px;
+    display: flex;
+    flex-direction: column;
+
+    width: calc(100% - 240px);
+}
+.List_name {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height, or 150% */
+
+    /* Orange/$-Orange-500 */
+
+    color: #ff7506;
+}
+.Table_Status{
+    width: calc(100% - 183px);
+}
+.List_status {
+    display: flex;
+
+    justify-content: space-between;
+    flex-direction: wrap;
+}
+.List_status p {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* Gray/$-gray-500 */
+
+    color: #282739;
+}
+.Status_full {
+    display: flex;
+    flex-direction: wrap;
+    gap: 24px;
+}
+
+.List_status input {
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 12px;
+
+    width: 300px;
+    height: 44px;
+
+    /* white */
+
+    background: #ffffff;
+    /* Gray/$-gray-100 */
+
+    border: 1.5px solid #d4d4d7;
+    border-radius: 8px;
+}
+.Search_Eq{
+    margin-left: -50px;
+}
+.btnAddEuq {
+    float: right;
+    margin-top: -94px;
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 12px 4px;
+
+background: #FFF2E7;
+/* down */
+
+box-shadow: 0px 0px 6px #E7E9F2;
+border-radius: 8px 0px 0px 8px;
+width: 73px;
+height: 94px;
+
+}
+.btnAddEuq p{
+    
+    font-weight: 600;
+font-size: 14px;
+color: var(--colormainBold);
+text-align: center;
+}
+.Table_Euq table {
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.Table_Euq th {
+    background-color: var(--colormain);
+    color: white;
+    border: 1px solid white;
+
+    height: 49px;
+    padding-left: 10px;
+}
+.thEuq {
+    border-top-left-radius: 8px;
+}
+.thEuqEnd {
+    border-top-right-radius: 8px;
+}
+.Table_Euq td {
+    height: 49px;
+    border: 1px solid white;
+    border-right: 1px solid var(--colormain);
+    background-color: white;
+    padding-left: 10px;
+
+}

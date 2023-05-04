@@ -43,7 +43,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 20px;
+    margin-top: 15px;
 
     gap: 4px;
 
@@ -105,20 +105,84 @@
     flex-grow: 0;
 }
 .forgetPass {
+    width: 250px;
+    height: 21px;
+
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+
+    color: #e73f3f;
+}
+.forgetPassnew {
+    display: flex;
+    justify-content: center;
     width: 160px;
     height: 21px;
     margin-top: 10px;
     font-family: "Nunito";
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
 
     color: #e73f3f;
 }
+.forgetPassnew:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 .forgetPass:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+.errorFP {
+    display: flex;
+    align-items: center;
+    
+    height: 21px;
+}
+.errorCode {
+    margin-left: 5px;
+    margin-top: 10px;
+    width: 300px;
+    height: 21px;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #e73f3f;
+}
+.usertextError , .passtextError{
+    border: 1px solid red;
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0px 10px 12px;
+    gap: 10px;
+    margin-top: -20px;
+    width: 400px;
+    height: 44px;
+
+    /* white */
+
+    background: #ffffff;
+    /* Gray/$-gray-100 */
+
+ 
+    border-radius: 8px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 }
 .btnDN {
     display: flex;
@@ -128,10 +192,10 @@
     padding: 10px 24px;
     gap: 8px;
     color: white;
-
+    font-size: 18px;
     width: 162px;
     height: 40px;
-
+    margin-top: 20px;
     border: 2px solid white;
 
     background: #ff9138;
