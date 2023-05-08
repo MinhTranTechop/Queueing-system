@@ -2,8 +2,10 @@ import React from 'react';
 import './css/Topbar.css';
 import avata from '../assets/avata.png'
 import Notify from './Notify';
-import { Link } from 'react-router-dom';
+import Profile from '../pages/Profile';
+import { Link   } from "react-router-dom";
 const Topbar : React.FC = () => {
+    
     return (
         <div className='topbar'>
             <div className='topbar-left'>
@@ -15,7 +17,7 @@ const Topbar : React.FC = () => {
                 </div>
                 <div className='profile'>
                     <div className='imageP'>
-                  <Link to="/profile:id"> <img src={avata}/></Link>
+                  <Link to={`/profile`}> <img src={avata}/></Link>
                     </div>
                     <div className='nameP'>
                         <p className='xinchao'>Xin chào</p>

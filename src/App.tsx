@@ -11,6 +11,7 @@ import AddEquip from "./components/EquipmentManagement/AddEquip";
 import ListEquip from "./components/EquipmentManagement/ListEquip";
 import DetailEquip from "./components/EquipmentManagement/DetailEquip";
 import UpdateEquip from "./components/EquipmentManagement/UpdateEquip";
+import Pagination from "./components/Paging";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 
@@ -30,8 +31,9 @@ const App = () => {
           <Route path="/notify" element={<Notify/>}/>
           <Route path="/AddEq" element={<AddEquip/>}/>
           <Route path="/ListEq" element={<ListEquip/>}/>
-          <Route path="/DetallEq" element={<DetailEquip/>}/>
-          <Route path="/UpdateEq" element={<UpdateEquip/>}/> 
+          <Route path="/DetallEq/:Id_eq" element={<DetailEquip/>}/>
+          <Route path="/UpdateEq" element={<UpdateEquip/>}/>
+          <Route path="/paging" element={<Pagination itemsPerPage={10} totalItems={2}/>}/> 
           </Routes>
           </Router>
       
