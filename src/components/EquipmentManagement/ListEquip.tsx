@@ -24,7 +24,8 @@ interface Equipment {
 }
 const ITEMS_PER_PAGE = 5;
 const dbRef = ref(database);
-get(child(dbRef, `Equip`)).then((snapshot) => {
+
+get(child(dbRef, `Equip/`)).then((snapshot) => {
   if (snapshot.exists()) {
 
     const data = (snapshot.val()) ;
@@ -37,56 +38,57 @@ get(child(dbRef, `Equip`)).then((snapshot) => {
 });
 const ListEquip = () => {
   const navigate = useNavigate();
+  const [filterConnect, setFilterConnect] = useState<Equipment[]>([]);
+  const [filteredEquipment, setFilteredEquipment] = useState<Equipment[]>([]);
   const [equipment, setEquipment] = useState<Equipment[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  
+  function handleDetailsClick(eq:Equipment) {
+    navigate(`/DetallEq/${eq.Id_Eq}`, { state: { equipmentData: eq }, replace: true });
+  }
+  function handleUpdatesClick(eq:Equipment) {
+    navigate(`/UpdateEq/${eq.Id_Eq}`, { state: { equipmentData: eq }, replace: true });
+  }
   useEffect(() => {
     
-    const ref = database.ref("Equip");
-
+    const ref = database.ref("Equip/");
+    // let EquipID = ref.push().key;
     ref.on("value", (snapshot) => {
+      let id ;
       const data = snapshot.val();
       const equipmentList = [];
       
-      for (let id in data) {
+      for ( id in data) {
+        const eq = data[id];
         equipmentList.push({
           id,
           ...data[id],
+         
         });
       }
-
+      const equipmentItem = Object.values(data)[0]
+      // console.log(equipmentItem);
       setEquipment(equipmentList);
     });
 
     return () => ref.off();
   }, []);
-  const handleLogin = async () => {
-    
-      const userRef =  database.ref("Equip");
-      const snapshot = await userRef.once("value");
-      const userData = snapshot.val();
-    
-      
-       const EquipID = Object.keys(userData)[0];
-     
-       navigate(`/DetallEq/${EquipID}`);
-        
-       
-        
-      
-      // Login successful
-     
+  
+ 
 
-      
-      
- 
+  
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const query: string = event.target.value.toLowerCase();
+    const filteredEquipment: Equipment[] = equipment.filter((eq: Equipment) => {
+      const name: string = eq.Name_Eq.toLowerCase();
+      const address: string = eq.Address_Eq.toLowerCase();
+      const service: string = eq.Service_Eq.toLowerCase();
+      const id :string = eq.Id_Eq.toLowerCase();
+      return name.includes(query) || address.includes(query) || service.includes(query)|| id.includes(query);
+    });
+  
+    setFilteredEquipment(filteredEquipment);
   };
- 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-  const filteredItems = equipment.filter((Equipment) => {
-    return Equipment.Name_Eq.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+
 
   const [selectedOption, setSelectedOption] = useState("Tất cả");
   
@@ -99,9 +101,27 @@ const ListEquip = () => {
   const [selectedOption1, setSelectedOption1] = useState("Tất cả");
   const [open1, setOpen1] = useState(false);
 
-  const handleOptionClick1 = (option1: string): void => {
+  const handleOptionClick1 = ( option1: string): void => {
     setSelectedOption1(option1);
     setOpen1(false);
+    // const query: string = event.target.value.toLowerCase();
+    const filterConnect: Equipment[] = equipment.filter((eq: Equipment) => {
+      const Action = eq.Connect_Eq.toString().toLowerCase() ==="true";
+      const Action1 = eq.Connect_Eq.toString().toLowerCase() ;
+      if(option1 ==="Tất cả" )
+      {
+        console.log(eq.Connect_Eq)
+        return eq.Connect_Eq;
+      } else if (option1 === "Kết nối " && Action) {
+        console.log(eq.Connect_Eq  = true)
+        return eq.Connect_Eq = true;
+        
+      } else if (option1 === "Mất kết nối" && !Action1) {
+        console.log(eq.Connect_Eq =false)
+        return eq.Connect_Eq =false ;
+      }
+    });
+    setFilterConnect(filterConnect);
   };
   
   return (
@@ -159,7 +179,7 @@ const ListEquip = () => {
             <div className="Search_Eq">
               <p>Từ khóa</p>
               <div className="Search_btn" onChange={handleSearch}>
-                <span> Nhập từ khóa</span>
+                <input placeholder="Nhập từ khóa" />
                 <img src={piSearch} />
               </div>
             </div>
@@ -182,19 +202,35 @@ const ListEquip = () => {
                 </th>
               </tr>
               
-              {equipment.map((eq,index)  => (
+              {filteredEquipment.length > 0 ?
+               filteredEquipment.map((eq ,index) => (
               <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
-                <td>{eq.Id_Eq}</td>
+                <td>{eq.Id_Eq} </td>
                 <td>{eq.Name_Eq}</td>
                 <td>{eq.Address_Eq}</td>
                 <td>{eq.Action_Eq ? <div><img className="imgList" src={connect} alt="" /><span>Hoạt động</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Ngưng hoạt động</span></div>}</td>
                 <td>{eq.Connect_Eq ?<div><img className="imgList" src={connect} alt="" /><span>Kết nối</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Mất kết nối</span></div>}</td>
                 <td>{eq.Service_Eq}</td>
-                <td onClick={handleLogin}>
-                  Chi tiết
+                <td className="Detail_ListEq"onClick={() => handleDetailsClick(eq)} >
+                    Chi tiết
                 </td>
                 <td>
-                  <Link to="/UpdateEq">Cập nhập</Link>
+                  <Link to={`/UpdateEq`}>Cập nhật</Link>
+                </td>
+              </tr>
+              )) : equipment.map((eq, index) => (
+                <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
+                <td>{eq.Id_Eq} </td>
+                <td>{eq.Name_Eq}</td>
+                <td>{eq.Address_Eq}</td>
+                <td>{eq.Action_Eq ? <div><img className="imgList" src={connect} alt="" /><span>Hoạt động</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Ngưng hoạt động</span></div>}</td>
+                <td>{eq.Connect_Eq ?<div><img className="imgList" src={connect} alt="" /><span>Kết nối</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Mất kết nối</span></div>}</td>
+                <td>{eq.Service_Eq}</td>
+                <td className="Detail_ListEq"onClick={() => handleDetailsClick(eq)} >
+                    Chi tiết
+                </td>
+                <td className="Detail_ListEq"onClick={() => handleUpdatesClick(eq)} >
+                  Cập nhật
                 </td>
               </tr>
               ))}
@@ -202,7 +238,7 @@ const ListEquip = () => {
           </div>
         </div>
         <Link className="link-nav" to="/AddEq">
-          <div className="btnAddEuq">
+          <div className="btnAddEuq" >
             <img src={btnadd} />
             <p>Thêm thiết bị</p>
           </div>

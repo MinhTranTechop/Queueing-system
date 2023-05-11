@@ -31,8 +31,8 @@ const App = () => {
           <Route path="/notify" element={<Notify/>}/>
           <Route path="/AddEq" element={<AddEquip/>}/>
           <Route path="/ListEq" element={<ListEquip/>}/>
-          <Route path="/DetallEq/:Id_eq" element={<DetailEquip/>}/>
-          <Route path="/UpdateEq" element={<UpdateEquip/>}/>
+          <Route path="/DetallEq/:Id_Eq" element={<DetailEquip/>}/>
+          <Route path="/UpdateEq/:Id_Eq" element={<UpdateEquip/>}/>
           <Route path="/paging" element={<Pagination itemsPerPage={10} totalItems={2}/>}/> 
           </Routes>
           </Router>

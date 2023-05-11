@@ -19,6 +19,7 @@ interface User {
 const NewPass: React.FC = () => {
   const navigate = useNavigate();
   const { userId } = useParams<{ userId: string }>();
+ 
   const handleResetPassword =  () => {
    
     update(ref(database,`users/${userId}`),{
