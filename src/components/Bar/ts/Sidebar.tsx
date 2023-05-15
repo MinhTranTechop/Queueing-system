@@ -1,15 +1,15 @@
   import React, {useState} from 'react';
-  import './css/Sidebar.css';
-  import logoAlta from '../assets/logo.png';
-  import setting from '../assets/setting.png'
-  import service from '../assets/Frame 332.png'
-  import number from '../assets/fi_layers.png'
-  import report from '../assets/Frame1.png'
-  import item from '../assets/monitor.png'
-  import dashboard from '../assets/element-4.png'
+  import '../css/Sidebar.css';
+  import logoAlta from '../../../assets/logo.png';
+  import setting from '../../../assets/setting.png'
+  import service from '../../../assets/Frame 332.png'
+  import number from '../../../assets/fi_layers.png'
+  import report from '../../../assets/Frame1.png'
+  import item from '../../../assets/monitor.png'
+  import dashboard from '../../../assets/element-4.png'
   import {Link} from 'react-router-dom'
-  import iconlogout from "../assets/fi_log-out.png"
-  import veto from '../assets/vertical.png'
+  import iconlogout from "../../../assets/fi_log-out.png"
+  import veto from '../../../assets/vertical.png'
   const Navbar:React.FC = () => {
 
   const nav = document.querySelectorAll('a');
@@ -39,26 +39,27 @@
     
     <ul className="nav ">
       <li className="nav-item">
-        <a href="#" className="nav-link link-dark active " aria-current="page">
+        <a href="#" className="nav-link link-dark " aria-current="page">
           <img src={dashboard}/>
           <svg className="bi me-2 " width="9" height="16"></svg>
           Dashboard
         </a>
       </li>
       <li>
-        <Link className='link-nav' to="/ListEq"><a href="#" className="nav-link link-dark">
+        <Link className=' nav-link link-dark' to="/ListEq"> 
         <img src={item}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           
           Thiết bị  
-        </a></Link>
+        </Link>
       </li>
       <li>
-        <a href="#" className="nav-link link-dark">
+       <Link className='nav-link link-dark' to="/ListSv"> 
         <img src={service}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           Dịch vụ
-        </a>
+       
+        </Link>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">

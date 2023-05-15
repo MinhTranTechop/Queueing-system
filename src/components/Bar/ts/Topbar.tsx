@@ -1,8 +1,8 @@
 import React from 'react';
-import './css/Topbar.css';
-import avata from '../assets/avata.png'
+import '../css/Topbar.css';
+import avata from '../../../assets/avata.png'
 import Notify from './Notify';
-import Profile from '../pages/Profile';
+import Profile from '../../../pages/Profile';
 import { Link   } from "react-router-dom";
 const Topbar : React.FC = () => {
     

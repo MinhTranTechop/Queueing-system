@@ -1,17 +1,21 @@
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
-import Navbar from "./components/Sidebar";
+import Navbar from "./components/Bar/ts/Sidebar";
 import SignIn from "./pages/SignIn";
 import ForgetPass from "./pages/ForgetPass";
 import NewPass from "./pages/NewPass";
 import Profile from "./pages/Profile";
-import Notify from "./components/Notify";
+import Notify from "./components/Bar/ts/Notify";
 import AddEquip from "./components/EquipmentManagement/AddEquip";
 import ListEquip from "./components/EquipmentManagement/ListEquip";
 import DetailEquip from "./components/EquipmentManagement/DetailEquip";
 import UpdateEquip from "./components/EquipmentManagement/UpdateEquip";
-import Pagination from "./components/Paging";
+import Pagination from "./components/Bar/ts/Paging";
+import ListService from "./components/ServiceManagement/ts/ListService";
+import AddService from "./components/ServiceManagement/ts/AddService";
+import DetailService from "./components/ServiceManagement/ts/DetailService";
+import UpdateService from "./components/ServiceManagement/ts/UpdateService";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 
@@ -31,9 +35,13 @@ const App = () => {
           <Route path="/notify" element={<Notify/>}/>
           <Route path="/AddEq" element={<AddEquip/>}/>
           <Route path="/ListEq" element={<ListEquip/>}/>
-          <Route path="/DetallEq/:Id_Eq" element={<DetailEquip/>}/>
-          <Route path="/UpdateEq/:Id_Eq" element={<UpdateEquip/>}/>
-          <Route path="/paging" element={<Pagination itemsPerPage={10} totalItems={2}/>}/> 
+          <Route path="/DetallEq/:id" element={<DetailEquip/>}/>
+          <Route path="/UpdateEq/:id" element={<UpdateEquip/>}/>
+          <Route path="/paging" element={<Pagination itemsPerPage={10} totalItems={2}/>}/>
+          <Route path="/ListSv" element={<ListService/>}/> 
+          <Route path="/AddSv" element={<AddService/>}/>
+          <Route path="/UpdateSv/:id" element={<UpdateService/>}/>
+          <Route path="/DetailSv" element={<DetailService/>}/>
           </Routes>
           </Router>
       

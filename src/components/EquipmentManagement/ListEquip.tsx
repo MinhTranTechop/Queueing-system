@@ -1,8 +1,8 @@
 import React ,{useState, useEffect}from "react";
 import { Link ,useNavigate } from "react-router-dom";
 import "./css/ListEquip.css";
-import Topbar from "../Topbar";
-import Sidebar from "../Sidebar";
+import Topbar from "../Bar/ts/Topbar";
+import Sidebar from "../Bar/ts/Sidebar";
 import btnadd from "./assets/add-square.png";
 import piSearch from "./assets/fi_search.png";
 import piDrop from "./assets/fi_chevron-down.png";
@@ -12,6 +12,7 @@ import { database } from "../../firebase";
 import { ref, child, get } from "firebase/database";
 
 interface Equipment {
+  id:string;
   Id_Eq: string;
   Name_Eq: string;
   Type_Eq :string;
@@ -20,7 +21,7 @@ interface Equipment {
   Action_Eq:boolean;
   Service_Eq:string;
   Username_Eq:string;
-  Password_eq:string;
+  Password_Eq:string;
 }
 const ITEMS_PER_PAGE = 5;
 const dbRef = ref(database);
@@ -38,55 +39,81 @@ get(child(dbRef, `Equip/`)).then((snapshot) => {
 });
 const ListEquip = () => {
   const navigate = useNavigate();
-  const [filterConnect, setFilterConnect] = useState<Equipment[]>([]);
+  const [filterConnect, setFilterConnect] = useState("");
   const [filteredEquipment, setFilteredEquipment] = useState<Equipment[]>([]);
   const [equipment, setEquipment] = useState<Equipment[]>([]);
   
   function handleDetailsClick(eq:Equipment) {
-    navigate(`/DetallEq/${eq.Id_Eq}`, { state: { equipmentData: eq }, replace: true });
+    navigate(`/DetallEq/${eq.id}`, { state: { equipmentData: eq }, replace: true });
   }
   function handleUpdatesClick(eq:Equipment) {
-    navigate(`/UpdateEq/${eq.Id_Eq}`, { state: { equipmentData: eq }, replace: true });
+    navigate(`/UpdateEq/${eq.id}`, { state: { equipmentData: eq }, replace: true });
   }
-  useEffect(() => {
+  useEffect(  () => { 
     
-    const ref = database.ref("Equip/");
-    // let EquipID = ref.push().key;
-    ref.on("value", (snapshot) => {
-      let id ;
-      const data = snapshot.val();
-      const equipmentList = [];
-      
-      for ( id in data) {
-        const eq = data[id];
-        equipmentList.push({
-          id,
-          ...data[id],
-         
+     const  dbRef = ref(database);
+    get(child(dbRef, "Equip")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const  data = snapshot.val();
+        const  userArray  = Object.keys(data).map((key) => {
+          return {
+            id: key,
+            Name_Eq: data[key].Name_Eq,
+            Id_Eq: data[key].Id_Eq,
+             Type_Eq :data[key].Type_Eq,
+             Address_Eq: data[key].Address_Eq,
+               Connect_Eq:data[key].Connect_Eq,
+               Action_Eq:data[key].Action_Eq,
+               Service_Eq:data[key].Service_Eq,
+               Username_Eq:data[key].Username_Eq,
+               Password_Eq:data[key].Password_Eq
+          };
         });
+        setEquipment(userArray);
       }
-      const equipmentItem = Object.values(data)[0]
-      // console.log(equipmentItem);
-      setEquipment(equipmentList);
     });
+    // const fetchUsers = async () => {
+    //   const usersRef = database.ref("Equip");
+    //   const usersSnapshot = await usersRef.once("value");
 
-    return () => ref.off();
+    //   const fetchedUsers: Equipment[] = [];
+    //   usersSnapshot.forEach((userSnapshot) => {
+    //     const user = userSnapshot.val();
+    //     fetchedUsers.push(user);
+    //   });
+
+    //   setEquipment(fetchedUsers);
+    // };
+
+    // fetchUsers();
   }, []);
   
  
 
   
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
+   
+      
     const query: string = event.target.value.toLowerCase();
-    const filteredEquipment: Equipment[] = equipment.filter((eq: Equipment) => {
+    const filteredEquipments: Equipment[] =equipment.filter((eq: Equipment) => {
       const name: string = eq.Name_Eq.toLowerCase();
       const address: string = eq.Address_Eq.toLowerCase();
       const service: string = eq.Service_Eq.toLowerCase();
       const id :string = eq.Id_Eq.toLowerCase();
+     
+
+    
       return name.includes(query) || address.includes(query) || service.includes(query)|| id.includes(query);
+      
+    
+
     });
-  
-    setFilteredEquipment(filteredEquipment);
+    if (query === "") {
+      setEquipment(equipment);
+    } else {
+      setEquipment(filteredEquipments);
+    
+    }
   };
 
 
@@ -94,35 +121,52 @@ const ListEquip = () => {
   
   const [open, setOpen] = useState(false);
 
-  const handleOptionClick = (option: string): void => {
+  const handleOptionClick = (option: string ): void => {
     setSelectedOption(option);
     setOpen(false);
+    const filterConnect: Equipment[] = equipment.filter((eq: Equipment) => {
+      if (option === "Tất cả") {
+        return true;
+      }else if (option === "Hoạt động" && eq.Action_Eq === true  ) {
+         
+        
+        return true;
+        
+      } else if (option === "Ngưng hoạt động"&& eq.Action_Eq === false ) {
+        
+        return true;
+      }
+      return false;
+    });
+  
+    setEquipment(filterConnect);
   };
   const [selectedOption1, setSelectedOption1] = useState("Tất cả");
   const [open1, setOpen1] = useState(false);
 
-  const handleOptionClick1 = ( option1: string): void => {
+  const handleOptionClick1 = async ( option1: string) => {
     setSelectedOption1(option1);
     setOpen1(false);
-    // const query: string = event.target.value.toLowerCase();
-    const filterConnect: Equipment[] = equipment.filter((eq: Equipment) => {
-      const Action = eq.Connect_Eq.toString().toLowerCase() ==="true";
-      const Action1 = eq.Connect_Eq.toString().toLowerCase() ;
-      if(option1 ==="Tất cả" )
-      {
-        console.log(eq.Connect_Eq)
-        return eq.Connect_Eq;
-      } else if (option1 === "Kết nối " && Action) {
-        console.log(eq.Connect_Eq  = true)
-        return eq.Connect_Eq = true;
+    const filterConnect: Equipment[] =  equipment.filter((eq: Equipment) => {
+      if (option1 === "Tất cả") {
+         return true;
+      }else if (option1 === "Kết nối" && eq.Connect_Eq === true  ) {
+         
         
-      } else if (option1 === "Mất kết nối" && !Action1) {
-        console.log(eq.Connect_Eq =false)
-        return eq.Connect_Eq =false ;
+        return true;
+        
+      } else if (option1 === "Mất kết nối"&& eq.Connect_Eq === false ) {
+        
+        return true;
       }
+      return false;
     });
-    setFilterConnect(filterConnect);
+  
+    setEquipment(filterConnect);
+    // const query: string = event.target.value.toLowerCase();
+   
   };
+  
   
   return (
     <div>
@@ -147,7 +191,7 @@ const ListEquip = () => {
                       <span className="option_text">Tất cả</span>
                     </li>
                     <li className="option" onClick={() => handleOptionClick("Hoạt động")}>
-                      <span className="option_text" >Hoạt động</span>
+                      <span className="option_text" >Hoạt động{}</span>
                     </li>
                     <li className="option"onClick={() => handleOptionClick("Ngưng hoạt động")}>
                       <span className="option_text" >Ngưng hoạt động</span>
@@ -162,11 +206,11 @@ const ListEquip = () => {
                     <span className="drop_select" >{selectedOption1}</span>
                     <img className="icon-wrap" src={piDrop} />
                   </div>
-                  <ul className="list">
+                  <ul className="list" onClick={() => handleSearch} >
                     <li className="option"  onClick={() => handleOptionClick1("Tất cả")}>
                       <span className="option_text">Tất cả</span>
                     </li>
-                    <li className="option" onClick={() => handleOptionClick1("Kết nối ")}>
+                    <li className="option" onClick={() => handleOptionClick1("Kết nối")}>
                       <span className="option_text" >Kết nối</span>
                     </li>
                     <li className="option"onClick={() => handleOptionClick1("Mất kết nối")}>
@@ -178,8 +222,8 @@ const ListEquip = () => {
             </div>
             <div className="Search_Eq">
               <p>Từ khóa</p>
-              <div className="Search_btn" onChange={handleSearch}>
-                <input placeholder="Nhập từ khóa" />
+              <div className="Search_btn" >
+                <input placeholder="Nhập từ khóa" onChange={handleSearch} />
                 <img src={piSearch} />
               </div>
             </div>
@@ -201,8 +245,8 @@ const ListEquip = () => {
                   {" "}
                 </th>
               </tr>
-              
-              {filteredEquipment.length > 0 ?
+               
+              {/* {filteredEquipment.length > 0 ? 
                filteredEquipment.map((eq ,index) => (
               <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Eq} </td>
@@ -218,7 +262,9 @@ const ListEquip = () => {
                   <Link to={`/UpdateEq`}>Cập nhật</Link>
                 </td>
               </tr>
-              )) : equipment.map((eq, index) => (
+              )): */}
+              {
+                equipment.map((eq, index) => (
                 <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Eq} </td>
                 <td>{eq.Name_Eq}</td>

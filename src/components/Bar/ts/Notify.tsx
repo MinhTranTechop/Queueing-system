@@ -1,6 +1,6 @@
 import React , {useState} from "react";
-import './css/Notify.css'
-import iconNotify from "../assets/iconNotify.png"
+import '../css/Notify.css'
+import iconNotify from "../../../assets/iconNotify.png"
 const Notify = () => {
   const [isActive, setIsActive] = useState(false);
   

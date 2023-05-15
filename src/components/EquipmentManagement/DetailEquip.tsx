@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import "./css/DetailEquip.css"
-import Navbar from "../Sidebar";
-import Topbar from "../Topbar";
-import { database } from "../../firebase"
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./css/DetailEquip.css";
+import Navbar from "../Bar/ts/Sidebar";
+import Topbar from "../Bar/ts/Topbar";
+import { database } from "../../firebase";
+import { useParams } from "react-router-dom";
 import { ref, child, get } from "firebase/database";
 
 interface Equipment {
+  id: string;
   Id_Eq: string;
   Name_Eq: string;
   Type_Eq: string;
@@ -19,24 +20,26 @@ interface Equipment {
 }
 
 const DetailEquip = () => {
-  const { Id_Eq } = useParams<{ Id_Eq: string }>();
-  console.log(Id_Eq)
+  const { id } = useParams<{ id: string }>();
+  console.log(id);
   const [equipment, setEquipment] = useState<any>(null);
 
   useEffect(() => {
     const dbRef = ref(database);
-    get(child(dbRef, `equipment/${Id_Eq}`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-     
-        setEquipment(data);
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }, [Id_Eq]);
+    get(child(dbRef, `Equip/${id}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log(data);
+          setEquipment(data);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
 
   return (
     <div className="DetaillEq-main">
@@ -50,53 +53,46 @@ const DetailEquip = () => {
           <span className="DetaillEq_info">Thông tin thiết bị</span>
         </div>
         {equipment ? (
-          <form key={equipment.Id_Eq}>
+          <form key={equipment.Id_Eq} className="DetaillEq_group">
             <div className="DetaillEq-group">
               <div className="DetaillEq-name">
-                <p>Mã thiết bị:{equipment.Id_Eq}</p>
-
-
+                <p>Mã thiết bị:<span>{equipment.Id_Eq}</span></p>
+                
               </div>
 
               <div className="DetaillEq-loginin">
-                <p>Loại thiết bị:{equipment.Type_Eq}</p>
-
+                <p>Loại thiết bị:<span>{equipment.Type_Eq}</span></p>
+                
               </div>
               <div className="DetaillEq-phone">
-                <p>Tên thiết bị{equipment.Name_Eq}</p>
-
+                <p>Tên thiết bị:  <span>{equipment.Name_Eq}</span></p>
+              
               </div>
               <div className="DetaillEq-pass">
-                <p>Tên Đăng nhập:{equipment.Username_Eq}</p>
-
+                <p>Tên Đăng nhập:<span>{equipment.userName_Eq}</span></p>
+                
               </div>
               <div className="DetaillEq-email">
-                <p>Địa chỉ IP:{equipment.Address_Eq}</p>
-
+                <p>Địa chỉ IP:<span>{equipment.Address_Eq}</span></p>
+                
               </div>
               <div className="DetaillEq-position">
-                <p>Mật khẩu:{equipment.Password_eq}</p>
-
+                <p>Mật khẩu: <span>{equipment.Password_Eq}</span></p>
+               
               </div>
               <div className="DetaillEq-position">
-                <p>Dịch vụ sử dụng:{
-                    equipment.Service_Eq}</p>
-
+                <p>Dịch vụ sử dụng:</p>
+                <span>{equipment.Service_Eq}</span>
               </div>
             </div>
           </form>
         ) : (
-            <p></p>
-          )}
-        <div>
-
-
-        </div>
-
+          <p></p>
+        )}
+        <div></div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default DetailEquip
+export default DetailEquip;

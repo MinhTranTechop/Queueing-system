@@ -1,0 +1,30 @@
+.Select_date{
+    display: flex;
+    flex-direction: wrap;
+    align-items: center;
+    gap:10px;
+}
+.Select_date input{
+    display: flex;
+flex-direction: row-reverse;
+justify-content: space-between;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+background: #FFFFFF;
+color: #A9A9B0;
+border: 1.5px solid #D4D4D7;
+border-radius: 8px;
+background-image: url(../assets/calendar.png);
+background-size: 20px;
+background-position: left ;
+background-position-x: 10px;
+background-position-y: 10px;
+background-repeat: no-repeat;
+
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+ 
+    
+    opacity: 0;
+  }

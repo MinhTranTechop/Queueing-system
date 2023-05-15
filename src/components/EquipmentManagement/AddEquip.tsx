@@ -1,7 +1,7 @@
 import React , {useState}from "react";
 import "./css/AddEquip.css";
-import Navbar from "../Sidebar";
-import Topbar from "../Topbar";
+import Navbar from "../Bar/ts/Sidebar";
+import Topbar from "../Bar/ts/Topbar";
 import { Link, useNavigate } from "react-router-dom";
 import { database } from "../../firebase";
 import { ref, child, get } from "firebase/database";

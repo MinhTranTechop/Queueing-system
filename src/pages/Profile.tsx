@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
+import Navbar from "../components/Bar/ts/Sidebar";
+import Topbar from "../components/Bar/ts/Topbar";
 import "./css/Profile.css";
 import avata from '../assets/avata.png'
 import camera from '../assets/camera.png'
