@@ -79,7 +79,7 @@ const UpdateService = () => {
           <div className="addEq-phone">
             <p>Mô tả:</p>
             <input
-              className="textaddEq"
+              className="textaddEq1"
               placeholder="Mô tả dịch vụ "
               onChange={(e) => setService({
                 ...service,

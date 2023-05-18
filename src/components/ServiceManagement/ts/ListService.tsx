@@ -17,7 +17,7 @@ interface Service {
     Name_Sv: string;
     Review_Sv: string;
     Action_Sv:boolean;
-  
+    Date_Sv: string
     
   }
 
@@ -26,7 +26,7 @@ const ListService = () => {
     const [service, setService] = useState<Service[]>([]);
     
     function handleDetailsClick(sv:Service) {
-      navigate(`/DetallSv/${sv.id}`, { state: { serviceData: sv }, replace: true });
+      navigate(`/DetailSv/${sv.id}`, { state: { serviceData: sv }, replace: true });
     }
     function handleUpdatesClick(sv:Service) {
       navigate(`/UpdateSv/${sv.id}`, { state: { ServiceData: sv }, replace: true });
@@ -37,18 +37,21 @@ const ListService = () => {
       get(child(dbRef, "Service")).then((snapshot) => {
         if (snapshot.exists()) {
           const  data = snapshot.val();
+         
           const  userArray  = Object.keys(data).map((key) => {
             return {
               id: key,
               Name_Sv: data[key].Name_Sv,
               Id_Sv: data[key].Id_Sv,
               Review_Sv:data[key].Review_Sv,
-              Action_Sv:data[key].Action_Sv           
+              Action_Sv:data[key].Action_Sv ,
+              Date_Sv :data[key].Date_Sv         
             };
           });
           setService(userArray);
         }
       });
+      
       // const fetchUsers = async () => {
       //   const usersRef = database.ref("Equip");
       //   const usersSnapshot = await usersRef.once("value");
@@ -73,8 +76,8 @@ const ListService = () => {
         
       const query: string = event.target.value.toLowerCase();
       const filteredServices: Service[] =service.filter((eq: Service) => {
-        const name: string = eq.Name_Sv.toLowerCase();
-        const address: string = eq.Id_Sv.toLowerCase();
+        const name: string = eq.Id_Sv.toLowerCase();
+        const address: string = eq.Name_Sv.toLowerCase();
         const service: string = eq.Review_Sv.toLowerCase();
         const id :string = eq.id.toLowerCase();
        

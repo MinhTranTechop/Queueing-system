@@ -193,6 +193,9 @@
     padding-right: 7px;
     padding-bottom: 2px;
 }
+.addSv_number{
+    margin-top: -50px;
+}
 .addSv_number p {
     font-weight: 700;
     font-size: 20px;
@@ -250,4 +253,16 @@
     margin-right: 20px;
     border: 1.5px solid #4277ff;
     border-radius: 4px;
+}
+.textaddEq1 {
+    padding: 0px 0px 80px 12px;
+    margin-bottom: 50px;
+    width: 553px;
+    height: 132px;
+    background: #ffffff;
+    margin-top: -10px;
+    border: 1.5px solid #d4d4d7;
+    border-radius: 8px;
+
+    /* Inside auto layout */
 }

@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/ListSv" element={<ListService/>}/> 
           <Route path="/AddSv" element={<AddService/>}/>
           <Route path="/UpdateSv/:id" element={<UpdateService/>}/>
-          <Route path="/DetailSv" element={<DetailService/>}/>
+          <Route path="/DetailSv/:id" element={<DetailService/>}/>
           </Routes>
           </Router>
       

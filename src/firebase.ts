@@ -22,7 +22,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-
+const dbRef = firebase.database().ref('Service');
+export const dateNow = firebase.database.ServerValue.TIMESTAMP;
 export const database = firebase.database();
 export const auth = getAuth();
 export default firebase;

@@ -147,7 +147,9 @@
     right: 200px;
 }
 .btnAddEuq {
-    float: right;
+    position: absolute;
+    top: 250px;
+    right: 1px;
     margin-top: -94px;
     display: flex;
     flex-direction: column;

@@ -4,7 +4,10 @@ import Navbar from "../../Bar/ts/Sidebar";
 import Topbar from "../../Bar/ts/Topbar";
 import { Link, useNavigate } from "react-router-dom";
 import { database } from "../../../firebase";
-import { set } from "@firebase/database";
+
+import { dateNow } from "../../../firebase"
+import 'firebase/compat/database';
+
 const AddService = () => {
   const navigate = useNavigate();
 
@@ -22,15 +25,19 @@ const AddService = () => {
       !id ||
       !review
     ) {
+     
       setError("Vui lòng nhập dữ liệu đầy đủ");
     } else {
       const userRef = database.ref("Service");
       const newUserRef = userRef.push();
+
+      
       newUserRef.set({
         Name_Sv: name,
         Id_Sv: id,
         Review_Sv:review,
-        Action_Sv: false
+        Action_Sv: false,
+        Date_Sv : dateNow
       
       });
 
@@ -79,7 +86,7 @@ const AddService = () => {
             <div className="addEq-phone">
               <p>Mô tả:</p>
               <input
-                className="textaddEq"
+                className="textaddEq1"
                 placeholder="Mô tả dịch vụ "
                 onChange={(e) => setReview(e.target.value)}
               />
