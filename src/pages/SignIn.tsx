@@ -12,8 +12,11 @@ import waring from "../assets/warning.png";
 
 
 interface User {
+  id:string;
+  Name_User:string;
   userName: string;
   password: string;
+
 }
 const dbRef = ref(database);
 
@@ -41,22 +44,29 @@ get(child(dbRef, `users`)).then((snapshot) => {
       const userRef = database.ref("users").orderByChild("userName").equalTo(userName);
       const snapshot = await userRef.once("value");
       const userData = snapshot.val();
+
+      
       if (!userData) {
          
         setError("Sai mật khẩu hoặc tên đăng nhập");
         
         return;
       }
-       const userId = Object.keys(userData)[0];
+       const userId = Object.keys(userData)[0] ;
      const user = userData[userId] as User;
+     const userame= userData[userId].Name_User as User;
+    console.log(userame)
+     localStorage.setItem('id',userId);
+     localStorage.setItem('Name_User',userame.toString());
       if (user.password.toString() !== password) {
         
         setError("Sai mật khẩu hoặc tên đăng nhập ");
         
-        return;
+        return ;
       }
-      // Login successful
-      navigate(`/profile/${userId}`);
+      //Login successful
+      
+       navigate(`/profile/${userId}`);
   
 
       

@@ -62,11 +62,11 @@
         </Link>
       </li>
       <li>
-        <a href="#" className="nav-link link-dark">
+        <Link className='nav-link link-dark' to="/ListPr">
         <img src={number}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           Cấp số 
-        </a>
+       </Link>
       </li>
       <li>
         <a href="#" className="nav-link link-dark">

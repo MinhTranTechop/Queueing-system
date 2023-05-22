@@ -1,0 +1,249 @@
+.AddPr_form {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    position: absolute;
+    width: 1192px;
+    height: 563px;
+    left: 224px;
+    top: 135px;
+
+    /* White */
+
+    background: #ffffff;
+    /* Shadowbox */
+
+    box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
+    border-radius: 16px;
+}
+.addPr_info {
+    margin-top: 50px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+
+    color: #ff7506;
+}
+.NamePr {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    /* identical to box height, or 150% */
+
+    /* Gray/$-gray-400 Text */
+
+    color: #535261;
+}
+.select_menuAddPr {
+    z-index: 1;
+}
+
+.select_menu_openAddPr .listAddPr {
+    display: block;
+}
+.listAddPr {
+    list-style: none;
+    display: none;    
+    z-index: 2;
+  }
+
+.select_menu_openAddPr .icon-wrap {
+    transform: rotate(180deg);
+}
+.select_menuAddPr .listAddPr {
+    margin-top: 1px;
+    left: 325px;
+    position: absolute;
+    width: 400px;
+}
+.select_menuAddPr .listAddPr {
+    height: 198px;
+    overflow: auto;
+    margin-top: 1px;
+    left: 365px;
+    position: absolute;
+    width: 432px;
+}
+.select_menuAddPr .listAddPr::-webkit-scrollbar {
+    width: 4px; /* Độ rộng của thanh cuộn */
+  }
+  .select_menuAddPr .listAddPr::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+  }
+  
+  .select_menuAddPr .listAddPr::-webkit-scrollbar-thumb {
+    
+    
+    /* Orange/$-Orange-200 */
+    
+    background: #FFC89B;
+    border-radius: 43px;
+    
+  }
+  
+  .select_menuAddPr .listAddPr::-webkit-scrollbar-thumb:hover {
+    background-color: var(--colormainBold); /* Màu của thanh cuộn khi hover */
+  }  
+.listAddPr .option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.listAddPr .option:hover {
+    background: #fff2e7;
+}
+
+.listAddPr .option:nth-child(1) {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.listAddPr .option:last-child {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.select_btnAddPr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+
+    padding: 10px 12px;
+
+    width: 400px;
+    height: 44px;
+
+    /* white */
+
+    background: #ffffff;
+    /* Gray/$-gray-100 */
+
+    border: 1.5px solid #d4d4d7;
+    border-radius: 8px;
+}
+.btnBackPr {
+   
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 24px;
+ 
+
+    position: absolute;
+    width: 115px;
+    height: 48px;
+    left:680px;
+    top: 400px;
+
+    /* Orange/$-Orange-50 */
+
+    background: #fff2e7;
+    /* Orange/$-Orange-400 */
+    color: #ff9138;
+    border: 1.5px solid #ff9138;
+    /* down */
+
+    box-shadow: 0px 0px 6px #e7e9f2;
+    border-radius: 8px;
+}
+.btnAddPr {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    width: 115px;
+    height: 48px;
+    left: 850px;
+    top: 400px;
+
+    /* Orange/$-Orange-400 */
+
+    background: #ff9138;
+    /* down */
+    color: white;
+    box-shadow: 0px 0px 6px #e7e9f2;
+    border-radius: 8px;
+}
+.drop_selectPr{
+    color: #A9A9B0;
+}
+
+
+
+
+
+.a{
+    width: 100%;
+    
+    position: relative;
+    margin: 0;
+    padding: 0;
+  }
+  .btn{
+    
+    
+    left: calc(100% - 100px);
+    bottom: 0;
+    top: 20px;
+  }
+  #add svg{
+      font-size: 30px;
+  }
+  #add {
+      border: 1px solid whitesmoke;
+      text-align: center;
+      border-radius: 50%;
+      
+  }
+  button:focus{
+      outline: none;
+  
+  }
+  h4{
+      display: flex;
+      justify-content: flex-start;
+  }
+  .modal-content{
+      position: absolute;
+     width: 450px;
+     height: 300px;
+      
+     
+      background: white;
+      border-radius: 10px;
+      text-align: center;
+      top:25%;
+    
+  }
+   .modal-content .User{
+    margin-top: 20px;
+    position: relative;
+   }
+   .popup_header{
+      display: flex;
+      flex-direction: column;
+   }
+  .modal_footer{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 174px;
+    background-color:var(--colormain) ;
+  }

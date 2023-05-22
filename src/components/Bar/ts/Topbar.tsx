@@ -3,9 +3,10 @@ import '../css/Topbar.css';
 import avata from '../../../assets/avata.png'
 import Notify from './Notify';
 import Profile from '../../../pages/Profile';
-import { Link   } from "react-router-dom";
+import { useParams ,Link   } from "react-router-dom";
 const Topbar : React.FC = () => {
-    
+    const  userId  = localStorage.getItem('id'); 
+    const userName = localStorage.getItem('Name_User');
     return (
         <div className='topbar'>
             <div className='topbar-left'>
@@ -17,11 +18,11 @@ const Topbar : React.FC = () => {
                 </div>
                 <div className='profile'>
                     <div className='imageP'>
-                  <Link to={`/profile`}> <img src={avata}/></Link>
+                  <Link to={`/profile/${userId}`}> <img src={avata}/></Link>
                     </div>
                     <div className='nameP'>
                         <p className='xinchao'>Xin chào</p>
-                        <span className='nameMain'>Lê Quỳnh Ái Vân</span>
+                        <span className='nameMain'>{userName}</span>
                     </div>
                 </div>
             </div>

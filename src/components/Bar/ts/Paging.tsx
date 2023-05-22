@@ -21,7 +21,7 @@ const Pagination:React.FC<PaginationProps> = ({ itemsPerPage, totalItems }) => {
     };
 
   return (
-    <nav>
+    <div>
       <ul className="pagination">
         {pageNumbers.map(number => (
           <li key={number} className={number === activePage ? 'page-item active' : 'page-item'}>
@@ -31,7 +31,7 @@ const Pagination:React.FC<PaginationProps> = ({ itemsPerPage, totalItems }) => {
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

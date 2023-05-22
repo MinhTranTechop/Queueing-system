@@ -21,7 +21,7 @@ interface Equipment {
 
 const DetailEquip = () => {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+  
   const [equipment, setEquipment] = useState<any>(null);
 
   useEffect(() => {

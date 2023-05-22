@@ -16,6 +16,9 @@ import ListService from "./components/ServiceManagement/ts/ListService";
 import AddService from "./components/ServiceManagement/ts/AddService";
 import DetailService from "./components/ServiceManagement/ts/DetailService";
 import UpdateService from "./components/ServiceManagement/ts/UpdateService";
+import ListProgression from "./components/ProgressionManagement/ts/ListProgression";
+import AddProgression from "./components/ProgressionManagement/ts/AddProgression";
+import DetailProgression from "./components/ProgressionManagement/ts/DetailProgression";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 
@@ -29,6 +32,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<SignIn />} />
           <Route path="/navbar" element={<Navbar />} />
+       
           <Route path="/ForgetPass" element={<ForgetPass />} />
           <Route path="/Changepass/:userId" element={<NewPass />} />
           <Route path="/profile/:userId" element={<Profile />} />
@@ -39,6 +43,9 @@ const App = () => {
           <Route path="/UpdateEq/:id" element={<UpdateEquip/>}/>
           <Route path="/paging" element={<Pagination itemsPerPage={10} totalItems={2}/>}/>
           <Route path="/ListSv" element={<ListService/>}/> 
+          <Route path="/ListPr" element={<ListProgression/>}/> 
+          <Route path="/AddPr" element={<AddProgression/>}/> 
+          <Route path="/DetailPr/:id" element={<DetailProgression/>}/> 
           <Route path="/AddSv" element={<AddService/>}/>
           <Route path="/UpdateSv/:id" element={<UpdateService/>}/>
           <Route path="/DetailSv/:id" element={<DetailService/>}/>

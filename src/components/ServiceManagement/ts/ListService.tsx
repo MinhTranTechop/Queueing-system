@@ -24,7 +24,8 @@ interface Service {
 const ListService = () => {
     const navigate = useNavigate();
     const [service, setService] = useState<Service[]>([]);
-    
+    const [filterConnect, setFilterConnect] = useState<Service[]>([]);
+    const [filteredEquipment, setFilteredEquipment] = useState(false);
     function handleDetailsClick(sv:Service) {
       navigate(`/DetailSv/${sv.id}`, { state: { serviceData: sv }, replace: true });
     }
@@ -72,7 +73,7 @@ const ListService = () => {
   
     
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-     
+      setFilteredEquipment(true);
         
       const query: string = event.target.value.toLowerCase();
       const filteredServices: Service[] =service.filter((eq: Service) => {
@@ -88,12 +89,10 @@ const ListService = () => {
       
   
       });
-      if (query === "") {
-        setService(service);
-      } else {
-        setService(filteredServices);
+   
+        setFilterConnect(filteredServices);
       
-      }
+      
     };
   
   
@@ -102,6 +101,7 @@ const ListService = () => {
     const [open, setOpen] = useState(false);
   
     const handleOptionClick = (option: string ): void => {
+      setFilteredEquipment(true)
       setSelectedOption(option);
       setOpen(false);
       const filterConnect: Service[] = service.filter((eq: Service) => {
@@ -119,7 +119,7 @@ const ListService = () => {
         return false;
       });
     
-      setService(filterConnect);
+      setFilterConnect(filterConnect);
     };
     const [selectedOption1, setSelectedOption1] = useState("Tất cả");
     const [open1, setOpen1] = useState(false);
@@ -205,24 +205,22 @@ const ListService = () => {
               </th>
             </tr>
              
-            {/* {filteredService.length > 0 ? 
-             filteredService.map((eq ,index) => (
-            <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
-              <td>{eq.Id_Eq} </td>
-              <td>{eq.Name_Eq}</td>
-              <td>{eq.Address_Eq}</td>
-              <td>{eq.Action_Eq ? <div><img className="imgList" src={connect} alt="" /><span>Hoạt động</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Ngưng hoạt động</span></div>}</td>
-              <td>{eq.Connect_Eq ?<div><img className="imgList" src={connect} alt="" /><span>Kết nối</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Mất kết nối</span></div>}</td>
-              <td>{eq.Service_Eq}</td>
-              <td className="Detail_ListEq"onClick={() => handleDetailsClick(eq)} >
+            {filteredEquipment ? 
+             filterConnect.map((sv, index) => (
+              <tr key={sv.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
+              <td>{sv.Id_Sv} </td>
+              <td>{sv.Name_Sv}</td>
+              <td>{sv.Review_Sv}</td>
+              <td>{sv.Action_Sv ? <div><img className="imgList" src={connect} alt="" /><span>Hoạt động</span></div>  : <div><img className="imgList" src={disconnect} alt="" /><span>Ngưng hoạt động</span></div>}</td>
+              <td className="Detail_ListEq"onClick={() => handleDetailsClick(sv)} >
                   Chi tiết
               </td>
-              <td>
-                <Link to={`/UpdateEq`}>Cập nhật</Link>
+              <td className="Detail_ListEq"onClick={() => handleUpdatesClick(sv)} >
+                Cập nhật
               </td>
             </tr>
-            )): */}
-            {
+            )):
+            
               service.map((sv, index) => (
               <tr key={sv.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
               <td>{sv.Id_Sv} </td>
