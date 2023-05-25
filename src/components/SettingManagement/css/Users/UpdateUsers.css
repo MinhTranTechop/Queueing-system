@@ -1,0 +1,6 @@
+.select_btnUser input{
+    border:none
+}   
+.select_btnUser input:focus {
+    outline: none; /* Xóa viền */
+  }

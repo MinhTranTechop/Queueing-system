@@ -29,34 +29,35 @@ const AddProgression = () => {
     
   };
   const [progress, setProgress] = useState<Progression[]>([]);
+  
   const [nameSv, setNameSv] = useState("");
   const currentTime = moment().format("HH:mm:ss - DD/MM/YYYY");
   const currentTimeEnd = moment()
     .add(5, "days")
     .format("HH:mm:ss - DD/MM/YYYY");
-  // useEffect(() => {
-  //   const dbRef = ref(database);
-  //   get(child(dbRef, "Progression")).then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       const data = snapshot.val();
-  //       const userArray = Object.keys(data).map((key) => {
-  //         return {
-  //           id: key,
-  //           NameSv_Pr: data[key].NameSv_Pr,
-  //           Id_Pr: data[key].Id_Pr,
-  //           DateStart_Pr: data[key].DateStart_Pr,
-  //           DateEnd_Pr: data[key].DateEnd_Pr,
-  //           Status_Pr: data[key].Status_Pr,
-  //           Produce_Pr: data[key].Produce_Pr,
-  //           NameUsers_Pr: data[key].NameUsers_Pr,
-  //         };
-  //       });
-  //       setProgress(userArray);
-  //     }
-  //   });
+  useEffect(() => {
+    const dbRef = ref(database);
+    get(child(dbRef, "Progression")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const userArray = Object.keys(data).map((key) => {
+          return {
+            id: key,
+            NameSv_Pr: data[key].NameSv_Pr,
+            Id_Pr: data[key].Id_Pr,
+            DateStart_Pr: data[key].DateStart_Pr,
+            DateEnd_Pr: data[key].DateEnd_Pr,
+            Status_Pr: data[key].Status_Pr,
+            Produce_Pr: data[key].Produce_Pr,
+            NameUsers_Pr: data[key].NameUsers_Pr,
+          };
+        });
+        setProgress(userArray);
+      }
+    });
     
-  // }, []);
-
+  }, []);
+  const [selectprogress, setSelectprogress] = useState<Progression[]>([]);
  const handleAddUser = async () => {
   const initialId = 201000;
   setPop(!popup);
@@ -81,8 +82,8 @@ const AddProgression = () => {
   });
   
   // Retrieve all the newly added data
-  const snapshotAfterAdd = await get(userRef);
-  const dataAfterAdd = Object.values(snapshotAfterAdd.val()) as Progression[];
+  const snapshotNew = await get(newUserRef);
+  setProgress(snapshotNew.val());
   
 
   setNameSv("");

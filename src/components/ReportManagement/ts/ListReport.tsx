@@ -1,17 +1,18 @@
 import React ,{useState, useEffect}from "react";
-import "../css/ListProgression.css"
+import "../css/ListReport.css"
 import { Link ,useNavigate  , useParams} from "react-router-dom";
 import Topbar from "../../Bar/ts/Topbar";
 import Sidebar from "../../Bar/ts/Sidebar";
 import btnadd from "../../EquipmentManagement/assets/add-square.png";
-import piSearch from "../../EquipmentManagement/assets/fi_search.png";
-import piDrop from "../../EquipmentManagement/assets/fi_chevron-down.png";
-import wait from "../assets/Blue.png"
-import used from "../assets/Grey.png"
+import Swit from "../../../assets/arrow-right.png"
+import wait from "../../ProgressionManagement/assets/Blue.png"
+import used from "../../ProgressionManagement/assets/Grey.png"
 import disconnect from '../../EquipmentManagement/assets/Ellipse_1.png';
 import date from '../../ServiceManagement/assets/Vector.png'
 import { database } from "../../../firebase";
 import { ref, child, get } from "firebase/database";
+import { saveAs } from 'file-saver';
+
 
 interface Progression{
     id:string,
@@ -24,24 +25,38 @@ interface Progression{
     NameUsers_Pr:string
 }
 
-const ListProgression = () => {
-    const { userId } = useParams<{ userId: string }>();
+const ListReport = () => {
     const navigate = useNavigate();
     const [filteredEquipment, setFilteredEquipment] = useState(false);
   const [filteredProgression, setFilteredProgression] = useState<Progression[]>([]);
   const [progression, setProgression] = useState<Progression[]>([]);
-  
+  const [equipment, setEquipment] = useState<any>();
   function handleDetailsClick(eq:Progression) {
     navigate(`/DetailPr/${eq.id}`, { state: { ProgressionData: eq }, replace: true });
   }
 
- 
+  const downloadData = async () => {
+    try {
+      const dbRef = database.ref('Progression');
+      const snapshot = await dbRef.once('value');
+      const data = snapshot.val();
+  
+      const jsonContent = JSON.stringify(data);
+      const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8' });
+  
+      saveAs(blob, 'data.txt');
+    } catch (error) {
+      console.error('Error downloading data:', error);
+    }
+  };
+
   useEffect(  () => { 
     
      const  dbRef = ref(database);
     get(child(dbRef, "Progression")).then((snapshot) => {
       if (snapshot.exists()) {
         const  data = snapshot.val();
+        setEquipment(data);
         const  userArray  = Object.keys(data).map((key) => {
           return {
             id: key,
@@ -75,28 +90,7 @@ const ListProgression = () => {
   }, []);
   
  
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-   
-      setFilteredEquipment(true);
-        const query: string = event.target.value.toLowerCase();
-        const filteredEquipments: Progression[] =progression.filter((eq: Progression) => {
-
-          const address: string = eq.NameSv_Pr.toLowerCase();
-          const service: string = eq.Produce_Pr.toLowerCase();
-          const id :string = eq.NameUsers_Pr.toLowerCase();
-         const id_r :string = eq.Id_Pr.toString().toLowerCase();
     
-        
-          return address.includes(query) || service.includes(query)|| id.includes(query)||id_r.includes(query);
-          
-        
-    
-        });
-       
-          setFilteredProgression(filteredEquipments);
-        
-        
-      };
     
       const ListSv =[
       
@@ -120,7 +114,46 @@ const ListProgression = () => {
         const filterConnect: Progression[] = progression.filter((eq: Progression) => {
           if (option === "Tất cả") {
             return true;
-          }else if (option = ''  ) {
+          }else if (option ===eq.NameSv_Pr ) {
+             
+            
+            return true;
+            
+          }
+          return false;
+        });
+      
+        setFilteredProgression(filterConnect);
+      };
+      const [openSTT, setOpenSTT] = useState(false);
+    
+      const handleOptionClickSTT = (optionSTT: string ): void => {
+        setFilteredEquipment(true);
+        setSelectedOption(optionSTT);
+        setOpenSTT(false);
+        const filterConnect: Progression[] = progression.filter((eq: Progression) => {
+          if (optionSTT === "Tất cả") {
+            return true;
+          }else if (optionSTT ===eq.Id_Pr  ) {
+             
+            
+            return true;
+            
+          }
+          return false;
+        });
+      
+        setFilteredProgression(filterConnect);
+      };
+      const [openDate, setOpenDate] = useState(false);
+      const handleOptionClickDate = (optionDate: string ): void => {
+        setFilteredEquipment(true);
+        setSelectedOption(optionDate);
+        setOpenDate(false);
+        const filterConnect: Progression[] = progression.filter((eq: Progression) => {
+          if (optionDate === "Tất cả") {
+            return true;
+          }else if (optionDate === eq.DateStart_Pr  ) {
              
             
             return true;
@@ -156,11 +189,11 @@ const ListProgression = () => {
         // const query: string = event.target.value.toLowerCase();
        
       };
-      const [selectedOptionPr, setSelectedOptionPr] = useState("Tất cả");
+     
       const [openPr, setOpenPr] = useState(false);
     
       const handleOptionClickPr = (optionPr: string ): void => {
-        setSelectedOptionPr(optionPr);
+       setFilteredEquipment(true)
         setOpen(false);
         const filterConnect: Progression[] = progression.filter((eq: Progression) => {
           if (optionPr === "Tất cả" ) {
@@ -182,6 +215,22 @@ const ListProgression = () => {
       
         setFilteredProgression(filterConnect);
       };
+      const handleSearch = (optionSelect :string)=> {
+        
+   
+        const filterConnect: Progression[] = progression.filter((eq: Progression) => {
+          if (optionSelect === "dateStart" ) {
+         
+          }else if (optionSelect === "DateEnd" && eq.Status_Pr ==="wait"  ) {
+             
+            
+            return true;
+          }
+          return false;
+        });
+      
+        setFilteredProgression(filterConnect);
+       };
   return (
     <div>
       <Topbar />
@@ -193,35 +242,101 @@ const ListProgression = () => {
         <div className="Table_Status">
           <div className="List_status">
             <div className="Status_full">
-              <div className="Action_status">
-                <p>Tên dịch vụ</p>
-                <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
-                  <div className="select_btnSv" >
-                    <span className="drop_select" >{selectedOption}</span>
-                    <img className="icon-wrap" src={piDrop} />
+            
+              
+            
+            {equipment? 
+
+           
+              <div className="Connect_status" >
+              <p>Chọn thời gian</p>
+             <div className='Select_datePr'>
+                <div className='select_dateS'>
+                  <input type="date"  
+                 value={equipment.DateStart_Pr}  
+               />
+
+                </div>
+                <div className='imageDate'>
+                  <img src={date} alt="" />
+                </div>
+                <div className='select_dateE'>
+                <input type="date" value={equipment.DateStart_Pr}  />
+                </div>
+             </div>
+            </div>
+           : <p></p>
+             }
+            </div>
+           
+          </div>
+
+          <div className="Table_Rep">
+            <table>
+              <tr>
+                <th className="thRep" style={{ width: "226px" }}>
+                  STT
+               
+                  <div className={`select_menu${openSTT ? " select_menu_open" : ""}`} onClick={() => setOpenSTT(!openSTT)}>
+                  <div className="select_btnRp" >
+                  <img src={Swit} alt="" />
                   </div>
-                  <ul className="listSv">
-                  <li className="option"  onClick={() => handleOptionClick("Tất cả")}>
+                  <ul className="listRpSTT">
+                  <li className="option"  onClick={() => handleOptionClickSTT("Tất cả")}>
                       <span className="option_text">Tất cả</span>
                     </li>
-                    {ListSv.map((item)=>(
+                    {progression.map((item)=>(
                       
-                    <li key={item.id} className="option"  onClick={() => handleOptionClick(item.data)}>
-                      <span className="option_text">{item.data}</span>
+                    <li key={item.id} className="option"  onClick={() => handleOptionClickSTT(item.Id_Pr)}>
+                      <span className="option_text">{item.Id_Pr}</span>
                     </li>
               ))}
                   </ul>
                 </div>
-              </div>
+                </th>
               
-              <div className="Action_status">
-                <p>Tình trạng</p>
-                <div className={`select_menu2${openPr ? " select_menu_open2" : ""}`} onClick={() => setOpenPr(!openPr)}>
-                  <div className="select_btnSv" >
-                    <span className="drop_select" >{selectedOptionPr}</span>
-                    <img className="icon-wrap" src={piDrop} />
+                <th style={{ width: "232px" }}>Tên dịch vụ  
+                <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
+                  <div className="select_btnRp" >
+                  <img src={Swit} alt="" />
                   </div>
-                  <ul className="listSv">
+                  <ul className="listRpDv">
+                  <li className="option"  onClick={() => handleOptionClick("Tất cả")}>
+                      <span className="option_text">Tất cả</span>
+                    </li>
+                    {progression.map((item)=>(
+                      
+                    <li key={item.id} className="option"  onClick={() => handleOptionClick(item.NameSv_Pr)}>
+                      <span className="option_text">{item.NameSv_Pr}</span>
+                    </li>
+              ))}
+                  </ul>
+                </div></th>
+                <th style={{ width: "238px" }}>THời gian cấp  <div className={`select_menu${openDate ? " select_menu_open" : ""}`} onClick={() => setOpenDate(!openDate)}>
+                  <div className="select_btnRp" >
+                  <img src={Swit} alt="" />
+                  </div>
+                  <ul className="listRpDate">
+                  <li className="option"  onClick={() => handleOptionClickDate("Tất cả")}>
+                      <span className="option_text">Tất cả</span>
+                    </li>
+                    {progression.map((item)=>(
+                      
+                    <li key={item.id} className="option"  onClick={() => handleOptionClickDate(item.DateStart_Pr)}>
+                      <span className="option_text">{item.DateStart_Pr}</span>
+                    </li>
+              ))}
+                  </ul>
+                </div>
+                </th>
+                
+               
+                <th style={{ width: "216px" }}>Trạng thái  
+                <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
+                  <div className="select_btnRp" >
+                    <img src={Swit} alt="" />
+                  </div>
+                  <ul className="listRp">
                     <li className="option"  onClick={() => handleOptionClickPr("Tất cả")}>
                       <span className="option_text">Tất cả</span>
                     </li>
@@ -235,16 +350,13 @@ const ListProgression = () => {
                       <span className="option_text" >Bỏ qua</span>
                     </li>
                   </ul>
-                </div>
-              </div>
-              <div className="Connect_status">
-                <p>Nguồn cấp</p>
+                </div></th>
+                <th style={{ width: "196px" }}> Nguồn cấp 
                 <div className={`select_menuPr${open1 ? " select_menu_openPr" : ""}`} onClick={() => setOpen1(!open1)}>
-                  <div className="select_btnSv" >
-                    <span className="drop_select" >{selectedOption1}</span>
-                    <img className="icon-wrap" src={piDrop} />
+                  <div className="select_btnRp" >
+                  <img src={Swit} alt="" />
                   </div>
-                  <ul className="listSv" onClick={() => handleSearch} >
+                  <ul className="listRpHT"  >
                     <li className="option"  onClick={() => handleOptionClick1("Tất cả")}>
                       <span className="option_text">Tất cả</span>
                     </li>
@@ -255,67 +367,24 @@ const ListProgression = () => {
                       <span className="option_text" >Hệ thống</span>
                     </li>
                   </ul>
-                </div>
-              </div>
-              <div className="Connect_status">
-              <p>Chọn thời gian</p>
-             <div className='Select_datePr'>
-                <div className='select_dateS'>
-                  <input type="date" value={"2020-10-10"}  />
-
-                </div>
-                <div className='imageDate'>
-                  <img src={date} alt="" />
-                </div>
-                <div className='select_dateE'>
-                <input type="date" value={"2020-10-18"}  />
-                </div>
-             </div>
-            </div>
-            </div>
-            <div className="Search_Eq">
-              <p>Từ khóa</p>
-              <div className="Search_btnPr" >
-                <input placeholder="Nhập từ khóa" onChange={handleSearch} />
-                <img src={piSearch} />
-              </div>
-            </div>
-          </div>
-
-          <div className="Table_Euq">
-            <table>
-              <tr>
-                <th className="thEuq" style={{ width: "93px" }}>
-                  STT
-                </th>
-                <th style={{ width: "162px" }}>Tên khách hàng</th>
-                <th style={{ width: "171px" }}>Tên dịch vụ</th>
-                <th style={{ width: "161px" }}>THời gian cấp</th>
-                
-                <th style={{ width: "174px" }}>Hạn sử dụng</th>
-                <th style={{ width: "147px" }}>Trạng thái</th>
-                <th style={{ width: "120px" }}> Nguồn cấp</th>
-                <th className="thEuqEnd" style={{ width: "85px" }}>
-                  {" "}
-                </th>
+                </div></th>
+             
               </tr>
                
                 { filteredEquipment  ? 
                   filteredProgression.map((eq, index) => (
                     <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                     <td>{eq.Id_Pr} </td>
-                    <td>{eq.NameUsers_Pr}</td>
+                   
                     <td>{eq.NameSv_Pr}</td>
                     <td>{eq.DateStart_Pr}</td>
-                    <td>{eq.DateEnd_Pr}</td>
+                   
                     <td>{eq.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang chờ</span></div> :
                       eq.Status_Pr === "use" ?
                      <div><img className="imgList" src={used} alt="" /><span>Đã sử dụng</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Bỏ qua</span></div>}</td> 
                     <td>{eq.Produce_Pr}</td>
                     
-                    <td className="Detail_ListEq"onClick={() => handleDetailsClick(eq)} >
-                        Chi tiết
-                    </td>
+                   
                    
                   </tr> 
                   ))
@@ -324,18 +393,16 @@ const ListProgression = () => {
                 progression.map((eq, index) => (
                 <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Pr} </td>
-                <td>{eq.NameUsers_Pr}</td>
+               
                 <td>{eq.NameSv_Pr}</td>
                 <td>{eq.DateStart_Pr}</td>
-                <td>{eq.DateEnd_Pr}</td>
+               
                 <td>{eq.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang chờ</span></div> :
                   eq.Status_Pr === "use" ?
                  <div><img className="imgList" src={used} alt="" /><span>Đã sử dụng</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Bỏ qua</span></div>}</td> 
                 <td>{eq.Produce_Pr}</td>
                 
-                <td className="Detail_ListEq"onClick={() => handleDetailsClick(eq)} >
-                    Chi tiết
-                </td>
+                
                
               </tr> 
               ))
@@ -344,12 +411,12 @@ const ListProgression = () => {
             </table>
           </div>
         </div>
-        <Link className="link-nav" to={`/AddPr`}>
-          <div className="btnAddEuq" >
+        
+          <div onClick={downloadData} className="btnAddRep" >
             <img src={btnadd} />
-            <p>Cấp số mới</p>
+            <p>Tải về</p>
           </div>
-        </Link> 
+       
         
       </div>
       
@@ -357,4 +424,4 @@ const ListProgression = () => {
   )
 }
 
-export default ListProgression
+export default ListReport

@@ -39,11 +39,11 @@
     
     <ul className="nav ">
       <li className="nav-item">
-        <a href="#" className="nav-link link-dark " aria-current="page">
+      <Link className=' nav-link link-dark' to="/Dashboard"> 
           <img src={dashboard}/>
           <svg className="bi me-2 " width="9" height="16"></svg>
           Dashboard
-        </a>
+        </Link>
       </li>
       <li>
         <Link className=' nav-link link-dark' to="/ListEq"> 
@@ -69,11 +69,11 @@
        </Link>
       </li>
       <li>
-        <a href="#" className="nav-link link-dark">
+      <Link className='nav-link link-dark' to="/ListRp">
         <img src={report}/>
           <svg className="bi me-2" width="9" height="16"></svg>
           Báo cáo
-        </a>
+        </Link>
       </li>
       <li>
       <div className="dropdown" onClick={toggleDropdown}>
@@ -88,9 +88,9 @@
       
       <div className={`dropdown-menu${isActive ? " show" : ""}`}>
         <ul className="link_name" aria-labelledby="dropdownUser2">
-        <li><p className="dropdown-item " >Quản lý vai trò</p></li>
-        <li><p className="dropdown-item " >Quản lý tài khoản</p></li>
-        <li><p className="dropdown-item " >Nhật ký người dùng</p></li>
+        <Link className='link_nav ' to={"/ListPo"}><li><p className="dropdown-item " >Quản lý vai trò</p></li></Link>
+        <Link className='link_nav' to={"/ListUsers"}><li><p className="dropdown-item " >Quản lý tài khoản</p></li></Link>
+        <Link className='link_nav ' to={"/NotifyUsers"}><li><p className="dropdown-item " >Nhật ký người dùng</p></li></Link>
 
       </ul>
         </div>

@@ -1,0 +1,140 @@
+.addEq-email , .addEq-position{
+    margin-top: -20px;
+}
+.select_btnUser {
+    margin-right: 10px;
+    margin-top: -25px;
+    float: right;
+}
+.select_btnUser img:hover {
+    cursor: pointer;
+}
+.select_btnUser {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+  margin: auto;
+    margin-top: -5px;
+    display: flex;
+    flex-direction: row;
+
+    padding: 10px 12px;
+
+    width: 540px;
+    height: 44px;
+
+    /* white */
+
+    background: #ffffff;
+    /* Gray/$-gray-100 */
+
+    border: 1.5px solid #d4d4d7;
+    border-radius: 8px;
+}
+.listUserPo .option {
+    display: flex;
+    color: #282739;
+    font-style: normal;
+    font-weight: 400;
+
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.listUserPo {
+    list-style: none;
+    display: none;
+    z-index: 2;
+}
+
+.select_menu_open .listUserPo {
+    display: block;
+}
+.listUserPo .option:hover {
+    background: #fff2e7;
+}
+.select_menu .listUserPo {
+    overflow: auto;
+    margin-top: 40px;
+    left: -32px;
+    position: absolute;
+    width: 570px;
+    height: 120px;
+}
+
+.select_menu .listUserPo::-webkit-scrollbar {
+    width: 4px; /* Độ rộng của thanh cuộn */
+}
+.select_menu .listUserPo::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+}
+
+.select_menu .listUserPo::-webkit-scrollbar-thumb {
+    /* Orange/$-Orange-200 */
+
+    background: #ffc89b;
+    border-radius: 43px;
+}
+
+.select_menu .listUserPo::-webkit-scrollbar-thumb:hover {
+    background-color: var(--colormainBold); /* Màu của thanh cuộn khi hover */
+}
+.listUserPo .option:nth-child(1)
+{
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.listUserPo .option:last-child
+{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.listUserAction .option {
+    display: flex;
+    color: #282739;
+    font-style: normal;
+    font-weight: 400;
+
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.listUserAction {
+    list-style: none;
+    display: none;
+    z-index: 2;
+}
+
+.select_menu_open2Rp .listUserAction {
+    display: block;
+}
+.listUserAction .option:hover {
+    background: #fff2e7;
+}
+.select_menu2Rp .listUserAction {
+    
+    margin-top: 40px;
+    left: 530px;
+    position: absolute;
+    width: 570px;
+    height: 175px;
+}
+.listUserAction .option:nth-child(1)
+{
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.listUserAction .option:last-child
+{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}

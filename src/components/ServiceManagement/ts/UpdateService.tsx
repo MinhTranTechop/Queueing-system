@@ -42,11 +42,11 @@ const UpdateService = () => {
     <Navbar />
     <Topbar />
     <div>
-      <p className="Add_name">Quản lý thiết bị</p>
+      <p className="Add_name">Quản lý dịch vụ</p>
     </div>
     <div className="addEq-form">
       <div>
-        <span className="addEq_info">Thông tin thiết bị</span>
+        <span className="addEq_info">Thông tin dịch vụ</span>
       </div>
       {service ? (
       <form  key={service.id} >

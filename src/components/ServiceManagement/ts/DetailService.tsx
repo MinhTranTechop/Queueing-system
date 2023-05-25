@@ -8,7 +8,9 @@ import { ref, child, get, update } from "firebase/database";
 import btnadd from "../assets/add-square.png";
 import piSearch from "../assets/fi_search.png";
 import piDrop from "../assets/fi_chevron-down.png";
-import connect from "../assets/Ellipse2.png";
+import wait from "../../ProgressionManagement/assets/Blue.png"
+import used from "../../ProgressionManagement/assets/Grey.png"
+import connect from "../assets/Ellipse2.png"
 import disconnect from "../assets/Ellipse_1.png";
 import date from "../assets/Vector.png";
 
@@ -16,12 +18,69 @@ interface Number {
   Id_Nb: string;
   Status_Nb: boolean;
 }
+
+interface Progression{
+  id:string,
+  Id_Pr:string,
+  NameSv_Pr:string,
+  DateStart_Pr:string,
+  DateEnd_Pr:string,
+  Status_Pr:string,
+  Produce_Pr:string,
+  NameUsers_Pr:string
+}
 const DetailService = () => {
-  const [number, setNumber] = useState<Number[]>([]);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+ 
+  const [filteredEquipment, setFilteredEquipment] = useState(false);
+  const [filteredProgression, setFilteredProgression] = useState<Progression[]>([]);
+  const [progression, setProgression] = useState<Progression[]>([]);
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<any>();
+  useEffect(  () => { 
+    
+    const  dbRef = ref(database);
+   get(child(dbRef, "Progression")).then((snapshot) => {
+     if (snapshot.exists()) {
+       const  data = snapshot.val();
+       const  userArray  = Object.keys(data).map((key) => {
+         return {
+           id: key,
+           NameSv_Pr: data[key].NameSv_Pr,
+           Id_Pr: data[key].Id_Pr,
+           DateStart_Pr :data[key].DateStart_Pr,
+           DateEnd_Pr: data[key].DateEnd_Pr,
+              Status_Pr:data[key].Status_Pr,
+              Produce_Pr:data[key].Produce_Pr,
+              NameUsers_Pr:data[key].NameUsers_Pr
+              
+         };
+       });
+       setProgression(userArray);
+     }
+   });
+
+ }, []);
+ const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
+   
+  setFilteredEquipment(true);
+    const query: string = event.target.value.toLowerCase();
+    const filteredEquipments: Progression[] =progression.filter((eq: Progression) => {
+
+      const service: string = eq.Id_Pr.toString().toLowerCase();
+      
+     
+
+    
+      return  service.includes(query);
+      
+    
+
+    });
+   
+      setFilteredProgression(filteredEquipments);
+    
+    
+  };
   useEffect(() => {
     const dbRef = ref(database);
     get(child(dbRef, `Service/${id}`))
@@ -38,38 +97,45 @@ const DetailService = () => {
         console.error(error);
       });
   }, [id]);
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {};
-  const [selectedOption, setSelectedOption] = useState("Tất cả");
-
-  const [open, setOpen] = useState(false);
-
-  const handleOptionClick = (option: string): void => {
-    setSelectedOption(option);
-    setOpen(false);
-    const filterConnect: Number[] = service.filter((eq: Number) => {
-      if (option === "Tất cả") {
-        return true;
-      } else if (option === "Hoạt động" && eq.Status_Nb === true) {
-        return true;
-      } else if (option === "Ngưng hoạt động" && eq.Status_Nb === false) {
-        return true;
-      }
-      return false;
-    });
-
-    setService(filterConnect);
-  };
+  
+  const [selectedOptionPr, setSelectedOptionPr] = useState("Tất cả");
+      const [openPr, setOpenPr] = useState(false);
+    
+      const handleOptionClickPr = (optionPr: string ): void => {
+        setFilteredEquipment(true);
+        setSelectedOptionPr(optionPr);
+        setOpenPr(false);
+        const filterConnect: Progression[] = progression.filter((eq: Progression) => {
+          if (optionPr === "Tất cả" ) {
+            return true;
+          }else if (optionPr === "Đang thực hiện" && eq.Status_Pr ==="wait"  ) {
+             
+            
+            return true;
+            
+          } else if (optionPr === "Đã hoàn thành"&& eq.Status_Pr === "use" ) {
+            
+            return true;
+          } else if (optionPr === "Vắng"&& eq.Status_Pr === "back" ) {
+            
+            return true;
+          }
+          return false;
+        });
+      
+        setFilteredProgression(filterConnect);
+      };
   return (
     <div className="AddEq-main">
       <Navbar />
       <Topbar />
       <div>
-        <p className="Add_name">Quản lý thiết bị</p>
+        <p className="Add_name">Quản lý dịch vụ</p>
       </div>
       <div className="DetailSV_Full">
         <div className="DetailSv-form">
           <div>
-            <span className="addEq_info">Thông tin thiết bị</span>
+            <span className="addEq_info">Thông tin dịch vụ</span>
           </div>
           {service ? (
             <form key={service.id}>
@@ -140,41 +206,26 @@ const DetailService = () => {
               <div className="Status_full">
                 <div className="Action_status">
                   <p>Trạng thái </p>
-                  <div
-                    className={`select_menu${open ? " select_menu_open" : ""}`}
-                    onClick={() => setOpen(!open)}
-                  >
-                    <div className="selectSv_btn">
-                      <span className="drop_select">{selectedOption}</span>
-                      <img className="icon-wrap" src={piDrop} />
-                    </div>
-                    <ul className="list3">
-                      <li
-                        className="option"
-                        onClick={() => handleOptionClick("Tất cả")}
-                      >
-                        <span className="option_text">Tất cả</span>
-                      </li>
-                      <li
-                        className="option"
-                        onClick={() => handleOptionClick("Đã hoàn thành")}
-                      >
-                        <span className="option_text">Đã hoàn thành</span>
-                      </li>
-                      <li
-                        className="option"
-                        onClick={() => handleOptionClick("Đang thực hiện")}
-                      >
-                        <span className="option_text">Đang thực hiện</span>
-                      </li>
-                      <li
-                        className="option"
-                        onClick={() => handleOptionClick("Vắng")}
-                      >
-                        <span className="option_text">Vắng</span>
-                      </li>
-                    </ul>
+                  <div className={`select_menu${openPr ? " select_menu_open" : ""}`} onClick={() => setOpenPr(!openPr)}>
+                  <div className="select_btnSv" >
+                    <span className="drop_select" >{selectedOptionPr}</span>
+                    <img className="icon-wrap" src={piDrop} />
                   </div>
+                  <ul className="list3">
+                    <li className="option"  onClick={() => handleOptionClickPr("Tất cả")}>
+                      <span className="option_text">Tất cả</span>
+                    </li>
+                    <li className="option" onClick={() => handleOptionClickPr("Đang thực hiện")}>
+                      <span className="option_text" >Đang thực hiện</span>
+                    </li>
+                    <li className="option"onClick={() => handleOptionClickPr("Đã hoàn thành")}>
+                      <span className="option_text" >Đã hoàn thành</span>
+                    </li>
+                    <li className="option"onClick={() => handleOptionClickPr("Vắng")}>
+                      <span className="option_text" >Vắng</span>
+                    </li>
+                  </ul>
+                </div>
                 </div>
                 <div className="Connect_status">
                   <p>Chọn thời gian</p>
@@ -204,15 +255,28 @@ const DetailService = () => {
               <table>
                 <tr>
                   <th className="thEuq" style={{ width: "370px" }}>
-                    Mã dịch vụ
+                    Số thứ tự
                   </th>
-                  <th style={{ width: "370px" }}>Tên dịch vụ</th>
+                  <th style={{ width: "370px" }}>Trạng thái</th>
                 </tr>
-
-                <tr>
-                  <td> </td>
-                  <td></td>
+                { filteredEquipment  ? 
+                  filteredProgression.map((eq, index) => (
+                <tr style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
+                  <td>{eq.Id_Pr} </td>
+                  <td>{eq.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang thực hiện</span></div> :
+                  eq.Status_Pr === "use" ?
+                 <div><img className="imgList" src={connect} alt="" /><span>Đã hoàn thành</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Vắng</span></div>}</td> 
                 </tr>
+                  ))
+                  :  progression.map((eq, index) => (
+                  <tr style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
+                  <td> {eq.Id_Pr}</td>
+                  <td>{eq.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang thực hiện</span></div> :
+                  eq.Status_Pr === "use" ?
+                 <div><img className="imgList" src={connect} alt="" /><span>Đã hoàn thành</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Vắng</span></div>}</td> 
+                </tr>
+                ))
+              }
               </table>
             </div>
             

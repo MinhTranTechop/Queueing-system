@@ -136,7 +136,10 @@
     color: white;
   }
  
-
+.link_nav:hover 
+{ 
+  text-decoration: none;
+}
  
    
 

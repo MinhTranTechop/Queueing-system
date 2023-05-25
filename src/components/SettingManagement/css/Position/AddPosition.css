@@ -17,7 +17,7 @@
 
     color: #ff7506;
 }
-.addEq-form {
+.addPo-form {
     position: absolute;
     width: 1180px;
     height: 480px;
@@ -61,7 +61,7 @@
     left: 195px;
     top: 206px;
 }
-.addSv-group {
+.addPo-group {
     position: absolute;
     left: 26px;
     top: 60px;
@@ -176,27 +176,51 @@
     padding-right: 7px;
     padding-bottom: 2px;
 }
-.addSv_number{
-    margin-top: -50px;
+.addPo_number{
+    margin-top: 0px;
 }
-.addSv_number p {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 30px;
+.addPo_number p {
+   
+    
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
     /* identical to box height, or 150% */
-
-    /* Orange/$-Orange-500 */
-
-    color: #ff7506;
+    
+    display: flex;
+    align-items: center;
+    
+  
+    
+    color: #282739;
+    
+  
 }
-.my_checkbox {
+.addPo_number p::after{
+    content: "*";
+    color: red;
+}
+.addPo_checkboxform{
+    background: #FFF2E7;
+    border-radius: 8px;
+    width: 560px;
+height: 350px;
+padding: 20px;
+}
+.addPo_Checkbox span{
+    font-weight: 700;
+font-size: 20px;
+line-height: 30px;
+    color: var(--colormain);
+}
+.myPo_checkbox {
     display: flex;
     gap: 20px;
 }
-.addSv_Checkbox {
+.addPo_Checkbox {
     gap: 20px;
 }
-.addSv_Checkbox input[type="text"] {
+.addPo_Checkbox input[type="text"] {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -212,15 +236,15 @@
     border-radius: 8px;
 }
 
-.my_checkbox_update span {
+.myPo_checkbox_update span {
     position: absolute;
     left: 234px;
     bottom: 131px;
 }
-.addSv_Checkbox label {
+.addPo_Checkbox label {
     margin-left: 30px;
 }
-.addSv_Checkbox input[type="checkbox"] {
+.addPo_Checkbox input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
