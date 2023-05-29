@@ -10,8 +10,8 @@ import connect from '../../../EquipmentManagement/assets/Ellipse2.png'
 import disconnect from '../../../EquipmentManagement/assets/Ellipse_1.png'
 import { database } from "../../../../firebase";
 import { ref, child, get } from "firebase/database";
+import ReactPaginate from 'react-paginate';
 
-import Paging from "../../../Bar/ts/Paging"
 
 
 
@@ -37,6 +37,13 @@ const ListUsers = () => {
   const [equipment, setEquipment] = useState<User[]>([]);
   const [positionList , setPositionList] = useState<Position[]>([]);
 
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 7;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(equipment.length / itemsPerPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setPageNumber(selected);
+  };
   function handleUpdatesClick(eq:User) {
     navigate(`/UpdateUsers/${eq.userId}`, { state: { equipmentData: eq }, replace: true });
   }
@@ -230,7 +237,7 @@ const ListUsers = () => {
               ))
                 :
               
-                equipment.map((eq, index) => (
+                equipment.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                   <tr key={eq.userId} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                   <td>{eq.userName} </td>
                   <td>{eq.Name_User}</td>
@@ -247,8 +254,20 @@ const ListUsers = () => {
                 </tr>
               ))
             }
-            <Paging itemsPerPage={5} totalItems={equipment.length} />
+     
             </table>
+            <ReactPaginate
+       
+       pageCount={pageCount}
+       onPageChange={handlePageChange}
+       containerClassName="pagination"
+       
+       
+       disabledClassName="disabled-page"
+       activeLinkClassName="active-page"
+       pageClassName="page-item"
+       pageLinkClassName="page-link"
+     />
           </div>
         </div>
         <Link className="link-nav" to="/AddUsers">

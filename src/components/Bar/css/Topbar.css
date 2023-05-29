@@ -1,104 +1,102 @@
-.topbar{
+.topbar {
     display: flex;
     justify-content: space-between;
-  position: absolute;
-width: 1240px;
-height: 88px;
-left: 200px;
-top: 0px;
-
-}
-.topbar-left{
     position: absolute;
-width: 120px;
-height: 40px;
-left: 24px;
-top: 24px;
+    width: 1240px;
+    height: 88px;
+    left: 200px;
+    top: 0px;
 }
-.functionP{
+.topbar-left {
+    position: absolute;
+    width: 120px;
+    height: 40px;
+    left: 24px;
+    top: 24px;
+}
+.functionP {
     background-color: var(--colorpage);
     display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 10px 8px 10px 0px;
-gap: 8px;
-
-position: absolute;
-width: 110px;
-height: 40px;
-left: 0px;
-top: 0px;
-color: var(--colormain);
-border: 2px solid var(--colorpage);
-border-radius: 8px;
-}
-.notify{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px 10px 0px;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
     position: absolute;
-width: 32px;
-height: 32px;
-right: 260px;
-top: 28px;
-background: #FFF2E7;
-border-radius: 32px;
-
+    width: 110px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    color: var(--colormain);
+    border: 2px solid var(--colorpage);
+    border-radius: 8px;
 }
-.notify:hover{
+.notify {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 260px;
+    top: 28px;
+    background: #fff2e7;
+    border-radius: 32px;
+}
+.notify:hover {
     cursor: pointer;
 }
-.profile{
+.profile {
     position: absolute;
-width: 172px;
-height: 42px;
-left: 1004px;
-top: 24px;
+    width: 172px;
+    height: 42px;
+    left: 1004px;
+    top: 24px;
 }
-.nameP{
+.nameP {
     position: absolute;
-width: 124px;
-height: 42px;
-left: 48px;
-top: 0px;
+    width: 124px;
+    height: 42px;
+    left: 48px;
+    top: 0px;
 }
-.xinchao{
+.xinchao {
     position: absolute;
-width: 47px;
-height: 18px;
-right: 77px;
-top: 0px;
+    width: 47px;
+    height: 18px;
+    right: 77px;
+    top: 0px;
 
-/* 12/12 Reg */
+    /* 12/12 Reg */
 
-font-family: 'Nunito';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-/* identical to box height, or 150% */
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    /* identical to box height, or 150% */
 
+    /* Gray/$-gray-300 */
 
-/* Gray/$-gray-300 */
-
-color: #7E7D88;
+    color: #7e7d88;
 }
-.nameMain{
+.nameMain {
     position: absolute;
-width: 124px;
-height: 24px;
-right: 0px;
-top: 18px;
+    width: 124px;
+    height: 24px;
+    right: 0px;
+    top: 18px;
 
-/* 16/16 Bold */
+    /* 16/16 Bold */
 
-font-family: 'Nunito';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height, or 150% */
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
 
+    /* Gray/$-gray-400 Text */
 
-/* Gray/$-gray-400 Text */
-
-color: #535261;
+    color: #535261;
 }

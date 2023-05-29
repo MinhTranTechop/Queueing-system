@@ -4,7 +4,7 @@ import Navbar from "../../Bar/ts/Sidebar";
 import Topbar from "../../Bar/ts/Topbar";
 import { Link, useNavigate } from "react-router-dom";
 import { database } from "../../../firebase";
-
+import moment from "moment"
 import { dateNow } from "../../../firebase"
 import 'firebase/compat/database';
 
@@ -14,11 +14,12 @@ const AddService = () => {
   const [name, setName] = useState("");
  
   const [id, setId] = useState("");
-
-
+  
+  const username = localStorage.getItem("userName");
+  
   const [error, setError] = useState("");
   const [review, setReview] = useState("");
-
+  const currentTime = moment().format("HH:mm:ss - DD/MM/YYYY");
   const handleAddUser = () => {
     if (
       !name || 
@@ -31,6 +32,8 @@ const AddService = () => {
       const userRef = database.ref("Service");
       const newUserRef = userRef.push();
 
+      const notifyRef = database.ref("Notify");
+      const newNotify = notifyRef.push();
       
       newUserRef.set({
         Name_Sv: name,
@@ -41,6 +44,12 @@ const AddService = () => {
       
       });
 
+      newNotify.set({
+        Username_Nf:username,
+        Date_Nf:currentTime,
+        Address_Nf:"102.168.3.1",
+        Describe_Nf:"Thêm thông tin dịch vụ "+id,
+      });
       setError("");
       setName("");
      setReview("");

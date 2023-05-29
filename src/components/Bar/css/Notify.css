@@ -7,30 +7,50 @@
 }
 
 .notify-dropdown {
+    
     position: absolute;
     top: 100%;
     left: 0;
+    
     display: none;
     z-index: 1;
 }
 
 .notify-dropdown.show {
+    overflow: auto;
     display: block;
     left: -70px;
     background-color: white;
     top: 59px;
-    width: 360px;
-    height: 526px;
+    width: 365px;
+    height: 400px;
     border-radius: 10px;
 }
+.notify-dropdown.show::-webkit-scrollbar {
+    width: 4px; /* Độ rộng của thanh cuộn */
+}
+.notify-dropdown.show::-webkit-scrollbar-track {
+    margin-top: 40px;
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+}
 
+.notify-dropdown.show::-webkit-scrollbar-thumb {
+    /* Orange/$-Orange-200 */
+  
+    background: #ffc89b;
+    border-radius: 43px;
+}
+
+.notify-dropdown.show::-webkit-scrollbar-thumb:hover {
+    background-color: var(--colormainBold); /* Màu của thanh cuộn khi hover */
+}
 .dropdown_notify {
     padding-left: 24px;
-    padding-top: 11px;
+    padding-top: 20px;
     color: white;
     width: 360px;
     background-color: var(--colormain);
-    height: 48px;
+    height: 56px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
@@ -43,10 +63,11 @@
     padding: 0;
     list-style: none;
 }
-
+.notify_li{
+    height: 64px;
+}
 .notify-dropdown li {
-    margin-top: -8px;
-
+   
     cursor: pointer;
 }
 

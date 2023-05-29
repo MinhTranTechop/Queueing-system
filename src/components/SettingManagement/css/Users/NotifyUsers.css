@@ -1,0 +1,30 @@
+.Search_btnNf input{
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: block;
+    flex-direction: row;
+
+    padding: 10px 12px;
+
+    width: 240px;
+    height: 44px;
+
+    /* white */
+
+    background: #ffffff;
+    /* Gray/$-gray-100 */
+
+    border: 1.5px solid #d4d4d7;
+    border-radius: 8px;
+ }
+.Search_btnNf img {
+    position: absolute;
+    top:55px;
+    right: 200px;
+}

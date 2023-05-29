@@ -55,9 +55,12 @@ get(child(dbRef, `users`)).then((snapshot) => {
        const userId = Object.keys(userData)[0] ;
      const user = userData[userId] as User;
      const userame= userData[userId].Name_User as User;
-    console.log(userame)
+     const name = userData[userId].userName as User ;
+     
+    
      localStorage.setItem('id',userId);
      localStorage.setItem('Name_User',userame.toString());
+     localStorage.setItem('userName', name.toString());
       if (user.password.toString() !== password) {
         
         setError("Sai mật khẩu hoặc tên đăng nhập ");

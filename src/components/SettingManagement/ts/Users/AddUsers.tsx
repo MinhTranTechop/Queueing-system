@@ -7,14 +7,17 @@ import { database } from "../../../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import piDrop from "../../../EquipmentManagement/assets/fi_chevron-down.png";
-import { ref, child, get } from "firebase/database";
+import { ref, child, get  , update} from "firebase/database";
+
 
 interface Position{
+  id: string;
   Name_Po:string;
+  Count_Users:number;
 }
 const AddUsers = () => {
   const navigate = useNavigate();
-
+  
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -24,17 +27,17 @@ const AddUsers = () => {
   const [error, setError] = useState('');
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  
   useEffect(  () => { 
     
     const  dbRef = ref(database);
-   get(child(dbRef, "Position")).then((snapshot) => {
-     if (snapshot.exists()) {
-       const  data = snapshot.val();
-       
-       const  userArray  = Object.keys(data).map((key) => {
-        return {
-          id: key,
+    get(child(dbRef, "Position")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const  data = snapshot.val();
+        
+        const  userArray  = Object.keys(data).map((key) => {
+          return {
+            id: key,
           Name_Po: data[key].Name_Po,
           Count_Users: data[key].Count_Users,
           Review_Po :data[key].Review_Po,
@@ -42,16 +45,20 @@ const AddUsers = () => {
         };
       });
       setPositionList(userArray);
-     }
-   });
+    }
+  });
+  
+}, []);
 
- }, []);
 
+const handleAddUser   = async () => {
  
-  const handleAddUser  = () => {
+    
+    
     if (!name || !phone ||!email  ||!userName ||!password ||!password1  ) {
       setError("Vui lòng nhập dữ liệu đầy đủ");
     } else {
+     
     const userRef = database.ref('users');
     const newUserRef = userRef.push();
     newUserRef.set({
@@ -63,7 +70,32 @@ const AddUsers = () => {
      Action_User:action,
      Name_User:name
     });
+    const snapshot = await database.ref('users').once('value');
+    const data = snapshot.val();
+    let count = 1;
+    
 
+    // console.log(data1, data);
+    
+    for (const key in data) {
+      for (const keys in positionList) {
+        const userId = positionList[keys].id.toString();
+        
+        if (data[key].Position_User.toString() === position && data[key].Position_User.toString()  === positionList[keys].Name_Po.toString()  ) {
+           count++;
+           
+          update(ref(database,`Position/${userId}`),{
+            
+            Count_Users: count
+            });
+           
+          }
+      }
+      
+      }
+
+
+  
     
    
   

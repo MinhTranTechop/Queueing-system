@@ -28,8 +28,9 @@ const AddProgression = () => {
   const clickButton = () => {
     
   };
-  const [progress, setProgress] = useState<Progression[]>([]);
   
+  const [progress, setProgress] = useState<Progression[]>([]);
+  const last = [...progress].pop() || ""
   const [nameSv, setNameSv] = useState("");
   const currentTime = moment().format("HH:mm:ss - DD/MM/YYYY");
   const currentTimeEnd = moment()
@@ -57,7 +58,7 @@ const AddProgression = () => {
     });
     
   }, []);
-  const [selectprogress, setSelectprogress] = useState<Progression[]>([]);
+
  const handleAddUser = async () => {
   const initialId = 201000;
   setPop(!popup);
@@ -76,20 +77,20 @@ const AddProgression = () => {
     NameSv_Pr: nameSv,
     DateStart_Pr: currentTime,
     DateEnd_Pr: currentTimeEnd,
-    Status_Pr: "back",
+    Status_Pr: "use",
     Produce_Pr: "Hệ thống",
     NameUsers_Pr: userName,
   });
   
-  // Retrieve all the newly added data
-  const snapshotNew = await get(newUserRef);
-  setProgress(snapshotNew.val());
-  
-
-  setNameSv("");
+  setDateStart(currentTime);
+  setDateEnd(currentTimeEnd);
+  setStt(newId);
+ 
   
 };
-
+const [stt, setStt] = useState<number>();
+const [dateStart, setDateStart] = useState("");
+const [dateEnd, setDateEnd] = useState("");
   const ListSv = [
     { id: 1, data: "Khám tim mạch" },
     { id: 2, data: "Khám sản-Phụ hoa" },
@@ -197,23 +198,22 @@ const AddProgression = () => {
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-              {progress.map((pr)=>(
+               
                 <div>
                   <div className="popup_header">
-                    <span>Số thứ tự được cáp</span>
-                    <span>{pr.Id_Pr} </span>
+                    <h1>Số thứ tự được cấp</h1>
+                    <h2>{stt} </h2>
                     <span>
-                      Dv:{pr.NameSv_Pr} <p>(tại quầy số 1)</p>
+                      Dv:{nameSv} <p>(tại quầy số 1)</p>
                     </span>
                   </div>
                   <div className="modal_footer">
-                    <span>Thời gian cấp:{pr.DateStart_Pr}</span>
-                    <span>Hạn sữ dụng:{pr.DateEnd_Pr}</span>
+                    <span>Thời gian cấp:{dateStart}</span>
+                    <span>Hạn sữ dụng:{dateEnd}</span>
                   </div>
                 </div>
-              ))
-}
-              </div>
+             
+                         </div>
             </div>
           </div>
         </div>

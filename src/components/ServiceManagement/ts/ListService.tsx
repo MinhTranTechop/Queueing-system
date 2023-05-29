@@ -11,6 +11,7 @@ import connect from '../assets/Ellipse2.png'
 import disconnect from '../assets/Ellipse_1.png'
 import date from '../assets/Vector.png'
 import '../css/ListService.css'
+import ReactPaginate from 'react-paginate';
 interface Service {
     id:string;
     Id_Sv: string;
@@ -26,10 +27,18 @@ const ListService = () => {
     const [service, setService] = useState<Service[]>([]);
     const [filterConnect, setFilterConnect] = useState<Service[]>([]);
     const [filteredEquipment, setFilteredEquipment] = useState(false);
+    const [pageNumber, setPageNumber] = useState(0);
+    const itemsPerPage = 7;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(service.length / itemsPerPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setPageNumber(selected);
+  };
     function handleDetailsClick(sv:Service) {
       navigate(`/DetailSv/${sv.id}`, { state: { serviceData: sv }, replace: true });
     }
     function handleUpdatesClick(sv:Service) {
+      localStorage.setItem("Id_Sv",sv.Id_Sv);
       navigate(`/UpdateSv/${sv.id}`, { state: { ServiceData: sv }, replace: true });
     }
     useEffect(  () => { 
@@ -221,7 +230,7 @@ const ListService = () => {
             </tr>
             )):
             
-              service.map((sv, index) => (
+              service.slice(pagesVisited, pagesVisited + itemsPerPage).map((sv, index) => (
               <tr key={sv.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
               <td>{sv.Id_Sv} </td>
               <td>{sv.Name_Sv}</td>
@@ -236,6 +245,18 @@ const ListService = () => {
             </tr>
             ))}
           </table>
+          <ReactPaginate
+       
+       pageCount={pageCount}
+       onPageChange={handlePageChange}
+       containerClassName="pagination"
+       
+       
+       disabledClassName="disabled-page"
+       activeLinkClassName="active-page"
+       pageClassName="page-item"
+       pageLinkClassName="page-link"
+     />
         </div>
       </div>
       <Link className="link-nav" to="/AddSv">

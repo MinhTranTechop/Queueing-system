@@ -12,7 +12,7 @@ import date from '../../ServiceManagement/assets/Vector.png'
 import { database } from "../../../firebase";
 import { ref, child, get } from "firebase/database";
 import { saveAs } from 'file-saver';
-
+import ReactPaginate from 'react-paginate';
 
 interface Progression{
     id:string,
@@ -31,6 +31,15 @@ const ListReport = () => {
   const [filteredProgression, setFilteredProgression] = useState<Progression[]>([]);
   const [progression, setProgression] = useState<Progression[]>([]);
   const [equipment, setEquipment] = useState<any>();
+  
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 7;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(progression.length / itemsPerPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setPageNumber(selected);
+  };
+ 
   function handleDetailsClick(eq:Progression) {
     navigate(`/DetailPr/${eq.id}`, { state: { ProgressionData: eq }, replace: true });
   }
@@ -372,7 +381,7 @@ const ListReport = () => {
               </tr>
                
                 { filteredEquipment  ? 
-                  filteredProgression.map((eq, index) => (
+                  filteredProgression.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                     <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                     <td>{eq.Id_Pr} </td>
                    
@@ -390,7 +399,7 @@ const ListReport = () => {
                   ))
               : 
               
-                progression.map((eq, index) => (
+                progression.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                 <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Pr} </td>
                
@@ -409,6 +418,18 @@ const ListReport = () => {
               }
                
             </table>
+            <ReactPaginate
+       
+       pageCount={pageCount}
+       onPageChange={handlePageChange}
+       containerClassName="pagination"
+       
+       
+       disabledClassName="disabled-page"
+       activeLinkClassName="active-page"
+       pageClassName="page-item"
+       pageLinkClassName="page-link"
+     />
           </div>
         </div>
         

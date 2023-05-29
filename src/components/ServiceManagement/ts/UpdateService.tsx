@@ -5,11 +5,18 @@ import Topbar from "../../Bar/ts/Topbar";
 import { Link, useNavigate ,useParams } from "react-router-dom";
 import { database } from "../../../firebase";
 import { ref, child, get ,update } from "firebase/database";
+import moment from 'moment';
+
 const UpdateService = () => {
+
+
   const [error,setError] = useState("");
+  const username = localStorage.getItem("userName");
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const { id } = useParams<{ id: string }>()
   const [service, setService] = useState<any>();
+  const currentTime = moment().format("HH:mm:ss - DD/MM/YYYY");
   useEffect(() => {
     const dbRef = ref(database);
     get(child(dbRef, `Service/${id}`)).then((snapshot) => {
@@ -26,13 +33,18 @@ const UpdateService = () => {
   }, [id]);
 
   const handleUpdate =  () => {
-    // if (
-    //  !service
-    // ) {
-    //   setError("Vui lòng nhập dữ liệu đầy đủ");
-    // } else {
+    const notifyRef = database.ref("Notify");
+    const newNotify = notifyRef.push();
+    
+    newNotify.set({
+      Username_Nf:username,
+      Date_Nf:currentTime,
+      Address_Nf:"102.168.3.1",
+      Describe_Nf:"Cập nhật thông tin dịch vụ "+ service.Id_Sv,
+    });
     update(ref(database,`Service/${id}`),{
-      ...service
+      ...service, 
+      
     });
     navigate('/ListSv')
   };
@@ -60,7 +72,7 @@ const UpdateService = () => {
                 onChange={(e) => setService({
                   ...service,
                   Id_Sv : e.target.value
-                })} value={service.Id_Sv} 
+                })} value={service.Id_Sv}
               />
             </div>
 

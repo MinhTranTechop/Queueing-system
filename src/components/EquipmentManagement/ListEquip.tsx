@@ -10,8 +10,9 @@ import connect from './assets/Ellipse2.png'
 import disconnect from './assets/Ellipse_1.png'
 import { database } from "../../firebase";
 import { ref, child, get } from "firebase/database";
-import { log } from "console";
-import Paging from "../Bar/ts/Paging"
+import ReactPaginate from 'react-paginate';
+
+
 
 
 
@@ -27,25 +28,35 @@ interface Equipment {
   Username_Eq:string;
   Password_Eq:string;
 }
-const ITEMS_PER_PAGE = 5;
-const dbRef = ref(database);
 
-get(child(dbRef, `Equip/`)).then((snapshot) => {
-  if (snapshot.exists()) {
+// const ITEMS_PER_PAGE = 5;
+// const dbRef = ref(database);
 
-    const data = (snapshot.val()) ;
-    console.log(data);
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
+// get(child(dbRef, `Equip/`)).then((snapshot) => {
+//   if (snapshot.exists()) {
+
+//     const data = (snapshot.val()) ;
+//     console.log(data);
+//   } else {
+//     console.log("No data available");
+//   }
+// }).catch((error) => {
+//   console.error(error);
+// });
 const ListEquip = () => {
+  
   const navigate = useNavigate();
   const [filterConnect, setFilterConnect] = useState<Equipment[]>([]);
   const [filteredEquipment, setFilteredEquipment] = useState(false);
   const [equipment, setEquipment] = useState<Equipment[]>([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 7;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(equipment.length / itemsPerPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setPageNumber(selected);
+  };
+
   
   function handleDetailsClick(eq:Equipment) {
     navigate(`/DetallEq/${eq.id}`, { state: { equipmentData: eq }, replace: true });
@@ -76,20 +87,7 @@ const ListEquip = () => {
         setEquipment(userArray);
       }
     });
-    // const fetchUsers = async () => {
-    //   const usersRef = database.ref("Equip");
-    //   const usersSnapshot = await usersRef.once("value");
 
-    //   const fetchedUsers: Equipment[] = [];
-    //   usersSnapshot.forEach((userSnapshot) => {
-    //     const user = userSnapshot.val();
-    //     fetchedUsers.push(user);
-    //   });
-
-    //   setEquipment(fetchedUsers);
-    // };
-
-    // fetchUsers();
   }, []);
   
  
@@ -290,7 +288,7 @@ const ListEquip = () => {
               ))
                 :
               
-                equipment.map((eq, index) => (
+                equipment.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                 <tr key={eq.Id_Eq} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Eq} </td>
                 <td>{eq.Name_Eq}</td>
@@ -307,8 +305,20 @@ const ListEquip = () => {
               </tr>
               ))
             }
-            <Paging itemsPerPage={5} totalItems={equipment.length} />
+          
             </table>
+            <ReactPaginate
+       
+        pageCount={pageCount}
+        onPageChange={handlePageChange}
+        containerClassName="pagination"
+        
+        
+        disabledClassName="disabled-page"
+        activeLinkClassName="active-page"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+      />
           </div>
         </div>
         <Link className="link-nav" to="/AddEq">

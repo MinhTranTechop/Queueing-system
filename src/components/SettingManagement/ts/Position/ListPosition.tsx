@@ -118,7 +118,11 @@ const ListPosition = () => {
                   filteredProgression.map((eq, index) => (
                     <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                     <td>{eq.Name_Po} </td>
-                    <td>{eq.Count_Users}</td>
+                    {/* <td>{eq.Count_Users}</td> */}
+                    <td>{
+                        
+
+                      } </td>
                     <td>{eq.Review_Po}</td>
                  
                     

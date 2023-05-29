@@ -13,6 +13,7 @@ import used from "../../ProgressionManagement/assets/Grey.png"
 import connect from "../assets/Ellipse2.png"
 import disconnect from "../assets/Ellipse_1.png";
 import date from "../assets/Vector.png";
+import ReactPaginate from 'react-paginate';
 
 interface Number {
   Id_Nb: string;
@@ -36,6 +37,13 @@ const DetailService = () => {
   const [progression, setProgression] = useState<Progression[]>([]);
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<any>();
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 7;
+const pagesVisited = pageNumber * itemsPerPage;
+const pageCount = Math.ceil(progression.length / itemsPerPage);
+const handlePageChange = ({ selected }: { selected: number }) => {
+  setPageNumber(selected);
+};
   useEffect(  () => { 
     
     const  dbRef = ref(database);
@@ -268,7 +276,7 @@ const DetailService = () => {
                  <div><img className="imgList" src={connect} alt="" /><span>Đã hoàn thành</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Vắng</span></div>}</td> 
                 </tr>
                   ))
-                  :  progression.map((eq, index) => (
+                  :  progression.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                   <tr style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                   <td> {eq.Id_Pr}</td>
                   <td>{eq.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang thực hiện</span></div> :
@@ -278,6 +286,18 @@ const DetailService = () => {
                 ))
               }
               </table>
+              <ReactPaginate
+       
+       pageCount={pageCount}
+       onPageChange={handlePageChange}
+       containerClassName="pagination"
+       
+       
+       disabledClassName="disabled-page"
+       activeLinkClassName="active-page"
+       pageClassName="page-item"
+       pageLinkClassName="page-link"
+     />
             </div>
             
           </div>

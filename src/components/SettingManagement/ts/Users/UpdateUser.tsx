@@ -10,6 +10,7 @@ import piDrop from "../../../EquipmentManagement/assets/fi_chevron-down.png";
 import { ref, child, get  ,update} from "firebase/database";
 
 interface Position{
+  id:string;
   Name_Po:string;
 }
 
@@ -62,7 +63,9 @@ const UpdateUser = () => {
     //   setError("Vui lòng nhập dữ liệu đầy đủ");
     // } else {
     update(ref(database,`users/${userId}`),{
-      ...user
+      ...user,
+      Position_User: selectedOption,
+      Action_User:selectedOptionPr,
     });
     navigate('/ListUsers')
   
@@ -83,10 +86,10 @@ const UpdateUser = () => {
   const [selectedOption, setSelectedOption] = useState("");
       
       const [open, setOpen] = useState(false);
-  const handleOptionClick = (option: string ): void => {
+  const handleOptionClick = (hlee: string ): void => {
     setOpenAll(true)
-    setSelectedOption( option);
-    setUser(option)
+    setSelectedOption(hlee);
+   
     setOpen(false);
    
   };
@@ -95,7 +98,6 @@ const UpdateUser = () => {
     
       const handleOptionClickPr = (optionPr: string ): void => {
         setSelectedOptionPr(optionPr);
-        
         setOpen(false);
         
       };
@@ -183,51 +185,32 @@ const UpdateUser = () => {
           </div>
           <div className="addEq-position">
             <p>Vai trò:</p>
-            {openAll ?
-            <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
-                  <div className="select_btnUser" >
-                    
-                  <input className="drop_select"   value={selectedOption}/>
-                    <img className="icon-wrap" src={piDrop} />
-                  </div>
-                  <ul className="listUserPo">
-                 
-                    {positionList.map((item)=>(
-                      
-                    <li  className="option"  onClick={() => handleOptionClick(item.Name_Po)}>
-                      <span className="option_text">{item.Name_Po}</span>
-                    </li>
-              ))}
-                  </ul>
-                  </div>
-                  :
+            
                   <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
                   <div className="select_btnUser" >
                     
-                  <input className="drop_select" onChange={(e) => setUser({
-                    ...user,
-                    Position_User : e.target.value
-                  })}  value={user.Position_User}/>
+                  <input className="drop_select" 
+                   value={selectedOption}/>
                     <img className="icon-wrap" src={piDrop} />
                   </div>
                   <ul className="listUserPo">
                  
                     {positionList.map((item)=>(
                       
-                    <li  className="option"  onClick={() => handleOptionClick(item.Name_Po)}>
+                    <li  className="option" key={item.id}  onClick={() => handleOptionClick(item.Name_Po)}>
                       <span className="option_text">{item.Name_Po}</span>
                     </li>
               ))}
                   </ul>
                   </div>
-                  }
+                  
           </div>
           <div className="addEq-position">
             <p>Trạng thái:</p>
             {openAll ? 
             <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
                   <div className="select_btnUser" >
-                  <input className="drop_select"  value={selectedOptionPr}/>
+                  <input className="drop_select"  value={user.Action_User}/>
                 
                     <img className="icon-wrap" src={piDrop} />
                   </div>
@@ -244,10 +227,7 @@ const UpdateUser = () => {
                 </div>
                 : <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
                 <div className="select_btnUser" >
-                <input className="drop_select" onChange={(e) => setUser({
-                  ...user,
-                  Action_User : e.target.value
-                })}  value={user.Action_User}/>
+                <input className="drop_select"  value={selectedOptionPr}/>
               
                   <img className="icon-wrap" src={piDrop} />
                 </div>

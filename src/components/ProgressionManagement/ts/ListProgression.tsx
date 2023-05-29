@@ -11,7 +11,9 @@ import used from "../assets/Grey.png"
 import disconnect from '../../EquipmentManagement/assets/Ellipse_1.png';
 import date from '../../ServiceManagement/assets/Vector.png'
 import { database } from "../../../firebase";
+import Paging from "../../Bar/ts/Paging"
 import { ref, child, get } from "firebase/database";
+import ReactPaginate from 'react-paginate';
 
 interface Progression{
     id:string,
@@ -30,7 +32,13 @@ const ListProgression = () => {
     const [filteredEquipment, setFilteredEquipment] = useState(false);
   const [filteredProgression, setFilteredProgression] = useState<Progression[]>([]);
   const [progression, setProgression] = useState<Progression[]>([]);
-  
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 7;
+  const pagesVisited = pageNumber * itemsPerPage;
+  const pageCount = Math.ceil(progression.length / itemsPerPage);
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setPageNumber(selected);
+  };
   function handleDetailsClick(eq:Progression) {
     navigate(`/DetailPr/${eq.id}`, { state: { ProgressionData: eq }, replace: true });
   }
@@ -120,7 +128,7 @@ const ListProgression = () => {
         const filterConnect: Progression[] = progression.filter((eq: Progression) => {
           if (option === "Tất cả") {
             return true;
-          }else if (option = ''  ) {
+          }else if (option === eq.NameSv_Pr  ) {
              
             
             return true;
@@ -259,6 +267,7 @@ const ListProgression = () => {
               </div>
               <div className="Connect_status">
               <p>Chọn thời gian</p>
+              
              <div className='Select_datePr'>
                 <div className='select_dateS'>
                   <input type="date" value={"2020-10-10"}  />
@@ -268,7 +277,7 @@ const ListProgression = () => {
                   <img src={date} alt="" />
                 </div>
                 <div className='select_dateE'>
-                <input type="date" value={"2020-10-18"}  />
+                <input type="date" value={"2020-10-11"}  />
                 </div>
              </div>
             </div>
@@ -290,9 +299,9 @@ const ListProgression = () => {
                 </th>
                 <th style={{ width: "162px" }}>Tên khách hàng</th>
                 <th style={{ width: "171px" }}>Tên dịch vụ</th>
-                <th style={{ width: "161px" }}>THời gian cấp</th>
+                <th style={{ width: "190px" }}>THời gian cấp</th>
                 
-                <th style={{ width: "174px" }}>Hạn sử dụng</th>
+                <th style={{ width: "190px" }}>Hạn sử dụng</th>
                 <th style={{ width: "147px" }}>Trạng thái</th>
                 <th style={{ width: "120px" }}> Nguồn cấp</th>
                 <th className="thEuqEnd" style={{ width: "85px" }}>
@@ -321,7 +330,7 @@ const ListProgression = () => {
                   ))
               : 
               
-                progression.map((eq, index) => (
+                progression.slice(pagesVisited, pagesVisited + itemsPerPage).map((eq, index) => (
                 <tr key={eq.id} style={{background: index % 2 === 0 ? "white" : "#FFF2E7"}}>
                 <td>{eq.Id_Pr} </td>
                 <td>{eq.NameUsers_Pr}</td>
@@ -342,6 +351,18 @@ const ListProgression = () => {
               }
                
             </table>
+            <ReactPaginate
+       
+       pageCount={pageCount}
+       onPageChange={handlePageChange}
+       containerClassName="pagination"
+       
+       
+       disabledClassName="disabled-page"
+       activeLinkClassName="active-page"
+       pageClassName="page-item"
+       pageLinkClassName="page-link"
+     />
           </div>
         </div>
         <Link className="link-nav" to={`/AddPr`}>
