@@ -72,7 +72,7 @@ const handleAddUser   = async () => {
     });
     const snapshot = await database.ref('users').once('value');
     const data = snapshot.val();
-    let count = 1;
+    let count = 0;
     
 
     // console.log(data1, data);

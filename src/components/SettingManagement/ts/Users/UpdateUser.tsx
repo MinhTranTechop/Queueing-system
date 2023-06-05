@@ -87,9 +87,7 @@ const UpdateUser = () => {
       
       const [open, setOpen] = useState(false);
   const handleOptionClick = (hlee: string ): void => {
-    setOpenAll(true)
     setSelectedOption(hlee);
-   
     setOpen(false);
    
   };
@@ -97,8 +95,10 @@ const UpdateUser = () => {
   const [openPr, setOpenPr] = useState(false);
     
       const handleOptionClickPr = (optionPr: string ): void => {
+        
         setSelectedOptionPr(optionPr);
-        setOpen(false);
+        setOpenAll(true);
+        setOpenPr(false);
         
       };
   const inputType1 = showPassword1 ? "text" : "password";
@@ -210,7 +210,7 @@ const UpdateUser = () => {
             {openAll ? 
             <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
                   <div className="select_btnUser" >
-                  <input className="drop_select"  value={user.Action_User}/>
+                  <input className="drop_select"  value={selectedOptionPr}/>
                 
                     <img className="icon-wrap" src={piDrop} />
                   </div>
@@ -227,7 +227,7 @@ const UpdateUser = () => {
                 </div>
                 : <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
                 <div className="select_btnUser" >
-                <input className="drop_select"  value={selectedOptionPr}/>
+                <input className="drop_select"  value={user.Action_User}/>
               
                   <img className="icon-wrap" src={piDrop} />
                 </div>

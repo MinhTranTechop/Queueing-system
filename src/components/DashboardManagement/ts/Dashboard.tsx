@@ -206,7 +206,7 @@ const Dashboard: React.FC = () => {
           <div className="List_static">
             <div className="List_static_header">
               <div className="header_dash">
-                <p>Bảng thống kê theo ngày</p>
+                <p>Bảng thống kê theo {selectedOption1}</p>
                 <span>Tháng 5/2023</span>
               </div>
               <div
@@ -249,13 +249,14 @@ const Dashboard: React.FC = () => {
           <div className="info_right">
             <span>Tổng quan</span>
           </div>
+          <Link className="link_nav" to={"/ListEq"}>
           <div className="component_Equip">
             <div></div>
             <div className="Equip_count">
               <h1>{countEq}</h1>
 
               <p>
-                {" "}
+               
                 <img src={item} alt="" /> Thiết bị
               </p>
             </div>
@@ -272,6 +273,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
+          </Link>
+          <Link className="link_nav" to={"/ListSv"}>
           <div className="component_Service">
             <div></div>
             <div className="Service_count">
@@ -295,6 +298,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
+          </Link>
+          <Link className="link_nav" to={"/ListPr"}>
           <div className="component_Progression">
             <div></div>
             <div className="Progression_count">
@@ -322,6 +327,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
+          </Link>
           <div className="Date_picker">
             <Calendar
               // inline

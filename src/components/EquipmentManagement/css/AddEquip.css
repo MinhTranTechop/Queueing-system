@@ -193,3 +193,64 @@
     padding-right: 7px;
     padding-bottom: 2px;
 }
+.ListEqType .option {
+    display: flex;
+    color: #282739;
+    font-style: normal;
+    font-weight: 400;
+
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.ListEqType {
+    list-style: none;
+    display: none;
+    z-index: 2;
+}
+
+.select_menu_open .ListEqType {
+    display: block;
+}
+.ListEqType .option:hover {
+    background: #fff2e7;
+}
+.select_menu .ListEqType {
+    overflow: auto;
+    margin-top: 40px;
+    left: 528px;
+    position: absolute;
+    width: 570px;
+    height: 120px;
+}
+
+.select_menu .ListEqType::-webkit-scrollbar {
+    width: 4px; /* Độ rộng của thanh cuộn */
+}
+.select_menu .ListEqType::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+}
+
+.select_menu .ListEqType::-webkit-scrollbar-thumb {
+    /* Orange/$-Orange-200 */
+
+    background: #ffc89b;
+    border-radius: 43px;
+}
+
+.select_menu .ListEqType::-webkit-scrollbar-thumb:hover {
+    background-color: var(--colormainBold); /* Màu của thanh cuộn khi hover */
+}
+.ListEqType .option:nth-child(1)
+{
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.ListEqType .option:last-child
+{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}

@@ -5,11 +5,13 @@ import Topbar from "../Bar/ts/Topbar";
 import { Link, useNavigate ,useParams } from "react-router-dom";
 import { database } from "../../firebase";
 import { ref, child, get ,update } from "firebase/database";
+import piDrop from "../EquipmentManagement/assets/fi_chevron-down.png"
 
 const AddEquip = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [equipment, setEquipment] = useState<any>();
+  const [openAll , setOpenAll] = useState(false);
   useEffect(() => {
     const dbRef = ref(database);
     get(child(dbRef, `Equip/${id}`)).then((snapshot) => {
@@ -28,7 +30,8 @@ const AddEquip = () => {
   const handleUpdate =  () => {
    
     update(ref(database,`Equip/${id}`),{
-      ...equipment
+      ...equipment,
+      Type_Eq: selectedOption,
 
       
     });
@@ -42,34 +45,18 @@ const AddEquip = () => {
   // const [address, setAddress] = useState('');
   
    const [error, setError] = useState('');
-  // const [userName, setUserName] = useState("");
-  // const [password, setPassword] = useState("");
-  // useEffect(() => {
-    
-  //   const ref = database.ref("Equip/");
-  //   // let EquipID = ref.push().key;
-  //   ref.on("value", (snapshot) => {
-  //     let id ;
-  //     const data = snapshot.val();
-  //     const equipmentList = [];
-      
-  //     for ( id in data) {
-  //       const eq = data[id];
-  //       equipmentList.push({
-  //         id,
-  //         ...data[id],
-         
-  //       });
-  //     }
-  //     const equipmentItem = Object.values(data)[0]
-  //     // console.log(equipmentItem);
-  //     setEquipment(equipmentList);
-  //   });
 
-  //   return () => ref.off();
-  // }, []);
   
+  const [selectedOption, setSelectedOption] = useState("Chọn loại thiết bị");
+      
+  const [open, setOpen] = useState(false);
+const handleOptionClick = (option: string ): void => {
+  setOpenAll(true);
+setSelectedOption(option);
 
+setOpen(false);
+
+};
   return (
     <div className="AddEq-main">
       <Navbar />
@@ -95,10 +82,39 @@ const AddEquip = () => {
 
           <div className="addEq-loginin">
             <p>Loại thiết bị:</p>
-            <input className="textaddEq" placeholder="Nhập loại thiết bị "  onChange={(e) => setEquipment({
-              ...equipment,
-              Type_Eq : e.target.value
-            })} value={equipment.Type_Eq}/>
+             {openAll ?
+            <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
+                  
+                  <div className="select_btnUser" >
+                  <span className="drop_select"  >{selectedOption}</span>
+                    <img className="icon-wrap" src={piDrop} />
+                  </div>
+                  <ul className="ListEqType">      
+                    <li  className="option"  onClick={() => handleOptionClick("Kiosk")}>
+                      <span className="option_text">Kiosk</span>
+                    </li>
+                    <li  className="option"  onClick={() => handleOptionClick("Display counter")}>
+                      <span className="option_text">Display counter</span>
+                    </li>
+                  </ul>
+                  </div>
+                  :
+                  <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
+                  
+                  <div className="select_btnUser" >
+                  <span className="drop_select"  >{equipment.Type_Eq}</span>
+                    <img className="icon-wrap" src={piDrop} />
+                  </div>
+                  <ul className="ListEqType">      
+                    <li  className="option"  onClick={() => handleOptionClick("Kiosk")}>
+                      <span className="option_text">Kiosk</span>
+                    </li>
+                    <li  className="option"  onClick={() => handleOptionClick("Display counter")}>
+                      <span className="option_text">Display counter</span>
+                    </li>
+                  </ul>
+                  </div>
+                  }
           </div>
           <div className="addEq-phone">
             <p>Tên thiết bị:</p>

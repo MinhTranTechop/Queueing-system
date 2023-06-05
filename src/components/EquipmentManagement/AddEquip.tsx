@@ -4,6 +4,7 @@ import Navbar from "../Bar/ts/Sidebar";
 import Topbar from "../Bar/ts/Topbar";
 import { Link, useNavigate } from "react-router-dom";
 import { database } from "../../firebase";
+import piDrop from "../EquipmentManagement/assets/fi_chevron-down.png";
 import { ref, child, get } from "firebase/database";
 
 const AddEquip = () => {
@@ -47,7 +48,16 @@ const AddEquip = () => {
    navigate("/ListEq");
     // Thực hiện xử lý thêm dữ liệu vào Realtime Database
   }
-  };
+  };const [selectedOption, setSelectedOption] = useState("Chọn loại thiết bị");
+      
+  const [open, setOpen] = useState(false);
+const handleOptionClick = (option: string ): void => {
+
+setSelectedOption(option);
+setType(option);
+setOpen(false);
+
+};
 
   return (
     <div className="AddEq-main">
@@ -70,7 +80,20 @@ const AddEquip = () => {
 
           <div className="addEq-loginin">
             <p>Loại thiết bị:</p>
-            <input className="textaddEq" placeholder="Nhập loại thiết bị " onChange={(e)=>setType(e.target.value)} />
+            <div className={`select_menu${open ? " select_menu_open" : ""}`} onClick={() => setOpen(!open)}>
+                  <div className="select_btnUser" >
+                  <span className="drop_select"  >{selectedOption}</span>
+                    <img className="icon-wrap" src={piDrop} />
+                  </div>
+                  <ul className="ListEqType">      
+                    <li  className="option"  onClick={() => handleOptionClick("Kiosk")}>
+                      <span className="option_text">Kiosk</span>
+                    </li>
+                    <li  className="option"  onClick={() => handleOptionClick("Display counter")}>
+                      <span className="option_text">Display counter</span>
+                    </li>
+                  </ul>
+                  </div>
           </div>
           <div className="addEq-phone">
             <p>Tên thiết bị:</p>

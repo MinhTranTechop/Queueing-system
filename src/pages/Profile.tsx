@@ -38,13 +38,14 @@ const Profile: React.FC = () => {
     <div className="profile-main">
       <Navbar />
       <Topbar />
+      {users ? (
       <div className="profile-form">
         <div className="img">
             <img className="avata-Profile" src={avata}/>
-            <span className="name-Profile">Lê Quỳnh Ái Vân </span>
+            <span className="name-Profile">{users.Name_User}</span>
             <img className="camera-Profile" src={camera}/>
         </div>
-        {users ? (
+       
         <div className="profile-group" key={users.userId}>
             <div className="profile-name">
                 <p>Tên người dùng</p>
@@ -71,11 +72,13 @@ const Profile: React.FC = () => {
                 <input className="textProfile"value={users.Position_User} disabled/>
             </div>
         </div>
-          ) : (
-            <p></p>
-          )}
+       
       </div>
+         ) : (
+          <p></p>
+        )}
     </div>
+    
   );
 };
 

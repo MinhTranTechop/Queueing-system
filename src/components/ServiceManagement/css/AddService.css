@@ -20,7 +20,7 @@
 .addEq-form {
     position: absolute;
     width: 1180px;
-    height: 480px;
+    height: 490px;
     left: 224px;
     top: 135px;
 
@@ -110,7 +110,7 @@
     width: 300px;
     height: 21px;
     left: 27px;
-    top: 460px;
+    top: 468px;
 
     /* 14/14 Reg */
 
@@ -215,7 +215,7 @@
 .my_checkbox_update span {
     position: absolute;
     left: 234px;
-    bottom: 131px;
+    bottom: 157px;
 }
 .addSv_Checkbox label {
     margin-left: 30px;
