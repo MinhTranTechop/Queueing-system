@@ -56,17 +56,37 @@ const UpdateUser = () => {
    });
 
  }, []);
-  const handleUpdate =  () => {
-    // if (
-    //  !service
-    // ) {
-    //   setError("Vui lòng nhập dữ liệu đầy đủ");
-    // } else {
+  const handleUpdate = async () => {
+  
     update(ref(database,`users/${userId}`),{
       ...user,
       Position_User: selectedOption,
       Action_User:selectedOptionPr,
     });
+    const snapshot = await database.ref("users").once("value");
+      const data = snapshot.val();
+      let count = 0;
+
+      // console.log(data1, data);
+
+      for (const key in data) {
+        for (const keys in positionList) {
+          const userId = positionList[keys].id.toString();
+
+          if (
+            data[key].Position_User.toString() === selectedOption &&
+            data[key].Position_User.toString() ===
+              positionList[keys].Name_Po.toString()
+          ) {
+            count++;
+
+            update(ref(database, `Position/${userId}`), {
+              Count_Users: count,
+            });
+          }
+        }
+      }
+
     navigate('/ListUsers')
   
   };
