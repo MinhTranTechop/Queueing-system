@@ -36,10 +36,7 @@ interface Progression {
 }
 
 const WeekComponent = () => {
-  const [filteredEquipment, setFilteredEquipment] = useState(false);
-  const [filteredProgression, setFilteredProgression] = useState<Progression[]>(
-    []
-  );
+
   const [progression, setProgression] = useState<Progression[]>([]);
   const [dateT, setDateT] = useState<number>();
 

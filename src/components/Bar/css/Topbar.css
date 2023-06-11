@@ -18,6 +18,33 @@
   
    z-index: 3;
 }
+.Topbar_Name {
+    display: flex;
+
+    margin-left: 18px;
+    width: 550px;
+    font-weight: 700;
+    font-size: 20px;
+line-height: 30px;
+
+
+color: #7E7D88
+}
+.Topbar_Name h1{
+    margin-left: 2px;
+    font-weight: 700;
+    font-size: 20px;
+line-height: 30px;
+color: #7E7D88
+}
+.Topbar_Name span{
+    margin-left: 2px;
+    font-weight: 700;
+    width:200px;
+    color: var(--colormain);
+    font-size: 20px;
+    line-height: 30px;
+}
 .functionP {
     background-color: var(--colorpage);
     display: flex;
@@ -30,9 +57,9 @@
     font-size: 20px;
     line-height: 30px;
     position: absolute;
-    width: 110px;
+    width: 200px;
     height: 40px;
-    left: 0px;
+    left: -40px;
     top: 0px;
     color: var(--colormain);
     border: 2px solid var(--colorpage);

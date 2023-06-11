@@ -46,7 +46,9 @@
     flex-direction: wrap;
     gap: 24px;
 }
-
+.DetaillEq_pass p{
+    display: flex;
+}
 .select_menu .listSv {
     overflow: auto;
     margin-top: 1px;

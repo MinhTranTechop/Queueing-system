@@ -4,6 +4,7 @@ import Topbar from "../../Bar/ts/Topbar";
 import { database } from "../../../firebase";
 import { useParams } from "react-router-dom";
 import wait from "../assets/Blue.png"
+import "../css/DetailProgression.css"
 import used from "../assets/Grey.png"
 import disconnect from '../../EquipmentManagement/assets/Ellipse_1.png';
 import { ref, child, get } from "firebase/database";
@@ -76,10 +77,10 @@ const DetailProgression = () => {
                 <p>Tên dịch vụ:  <span>{equipment.NameSv_Pr}</span></p>
               
               </div>
-              <div className="DetaillEq-pass">
-                <p>Trạng thái:{equipment.Status_Pr === "wait" ? <div><img className="imgList" src={wait} alt="" /><span>Đang chờ</span></div> :
+              <div className="DetaillEq_pass">
+                <p>Trạng thái:{equipment.Status_Pr === "wait" ? <div><span><img className="imgList" src={wait} alt="" />Đang chờ</span></div> :
                   equipment.Status_Pr === "use" ?
-                 <div><img className="imgList" src={used} alt="" /><span>Đã sử dụng</span></div> : <div><img className="imgList" src={disconnect} alt="" /><span>Bỏ qua</span></div>}</p>
+                 <div><span><img className="imgList" src={used} alt="" />Đã sử dụng</span></div> : <div><span><img className="imgList" src={disconnect} alt="" />Bỏ qua</span></div>}</p>
                 
               </div>
               <div className="DetaillEq-email">
@@ -90,21 +91,21 @@ const DetailProgression = () => {
              
               {users ?
               <div>
-              <div className="DetaillEq-position">
+              <div className="DetaillEq-">
                 <p>Số điện thoại: <span>{users.Phone_User}</span></p>
                
             </div>
-        <div className="DetaillEq-position">
-              <p>Địa chỉ Email:</p>
-              <span>{users.email}</span> 
+        <div className="DetaillEq_po">
+              <p>Địa chỉ Email:<span>{users.email}</span> </p>
+              
               </div>
               </div>
               :
               <p></p>
               }
-              <div className="DetaillEq-position">
-                <p>Hạn sử dụng:</p>
-                <span>{equipment.DateEnd_Pr}</span>
+              <div className="DetaillEq_po">
+                <p>Hạn sử dụng:<span>{equipment.DateEnd_Pr}</span></p>
+                
               </div>
              
               </div>

@@ -138,3 +138,11 @@
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
+.eyess{
+    position: relative;
+    display: flex;
+    justify-content: end;
+    top: -29px;
+    left: -15px;
+    
+}

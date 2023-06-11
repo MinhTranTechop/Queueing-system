@@ -111,7 +111,7 @@ const UpdateUser = () => {
     setOpen(false);
    
   };
-  const [selectedOptionPr, setSelectedOptionPr] = useState('');
+  const [selectedOptionPr, setSelectedOptionPr] = useState("");
   const [openPr, setOpenPr] = useState(false);
     
       const handleOptionClickPr = (optionPr: string ): void => {
@@ -173,7 +173,7 @@ const UpdateUser = () => {
               value={user.password} />
             
         
-          <div className="eyes">
+          <div className="eyess">
             <FontAwesomeIcon
               icon={showPassword ? faEyeSlash : faEye}
               onClick={toggleShowPassword}
@@ -196,7 +196,7 @@ const UpdateUser = () => {
               value={user.password} />
            
           
-          <div className="eyes">
+          <div className="eyess">
             <FontAwesomeIcon
               icon={showPassword1 ? faEyeSlash : faEye}
               onClick={toggleShowPassword1}
@@ -210,7 +210,8 @@ const UpdateUser = () => {
                   <div className="select_btnUser" >
                     
                   <input className="drop_select" 
-                   value={selectedOption}/>
+                   value={selectedOption === "" ? (user.Position_User && setSelectedOption(user.Position_User.toString()))  : selectedOption} 
+                  />
                     <img className="icon-wrap" src={piDrop} />
                   </div>
                   <ul className="listUserPo">
@@ -227,10 +228,10 @@ const UpdateUser = () => {
           </div>
           <div className="addEq-position">
             <p>Trạng thái:</p>
-            {openAll ? 
+          
             <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
                   <div className="select_btnUser" >
-                  <input className="drop_select"  value={selectedOptionPr}/>
+                  <input className="drop_select"  value={selectedOptionPr === "" ? (user.Action_User && setSelectedOptionPr(user.Action_User))  : selectedOptionPr} />
                 
                     <img className="icon-wrap" src={piDrop} />
                   </div>
@@ -245,23 +246,7 @@ const UpdateUser = () => {
                    
                   </ul>
                 </div>
-                : <div className={`select_menu2Rp${openPr ? " select_menu_open2Rp" : ""}`} onClick={() => setOpenPr(!openPr)}>
-                <div className="select_btnUser" >
-                <input className="drop_select"  value={user.Action_User}/>
-              
-                  <img className="icon-wrap" src={piDrop} />
-                </div>
-                <ul className="listUserAction">
                 
-                  <li className="option" onClick={() => handleOptionClickPr("Hoạt động")}>
-                    <span className="option_text" >Hoạt động</span>
-                  </li>
-                  <li className="option"onClick={() => handleOptionClickPr("Ngưng hoạt động")}>
-                    <span className="option_text" >Ngưng hoạt động</span>
-                  </li>
-                 
-                </ul>
-              </div>}
           </div>
           
         </div>

@@ -46,7 +46,14 @@
     flex-direction: wrap;
     gap: 24px;
 }
-
+.pageNext {
+    color: blue;
+   
+}
+.pageNext a :hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 .select_menu .list {
     margin-top: 1px;
     left: -31px;

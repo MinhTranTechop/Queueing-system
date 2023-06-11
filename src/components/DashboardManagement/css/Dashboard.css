@@ -231,9 +231,82 @@
     width: 401px;
     height: 700px;
 }
+.Eq_Action{
+    position: absolute;
+    top:140px;
+    height: 50px;
+    width: 51px;
+    left: 30px;
+}
+.Eq_Action .CircularProgressbar .CircularProgressbar-path {
+    stroke: #ff7506;
+}
+
+.Eq_NotAction{
+    position: absolute;
+    top:143px;
+    height: 45px;
+    width: 44px;
+    left: 33px;
+}
+.Eq_NotAction .CircularProgressbar .CircularProgressbar-path {
+    stroke: #7e7d88;
+}
+.Sv_Action{
+    position: absolute;
+    top:235px;
+    height: 50px;
+    width: 50px;
+    left: 30px;
+}
+.Sv_Action .CircularProgressbar .CircularProgressbar-path {
+    stroke: #4277FF;
+}
+.Sv_NotAction{
+    position: absolute;
+    top:237.5px;
+    height: 45px;
+    width: 44px;
+    left: 33px;
+}
+.Sv_NotAction .CircularProgressbar .CircularProgressbar-path {
+    stroke: #7E7D88;
+}
+.Pr_wait{
+    position: absolute;
+    top:325px;
+    height: 51px;
+    width: 51px;
+    left: 30px;
+}
+.Pr_wait .CircularProgressbar .CircularProgressbar-path {
+    stroke: #35C75A;
+}
+.Pr_use{
+    position: absolute;
+    top:328px;
+    height: 45px;
+    width: 44px;
+    left: 33px;
+}
+.Pr_use .CircularProgressbar .CircularProgressbar-path {
+    stroke: #7E7D88;
+}
+.Pr_back{
+    position: absolute;
+    top:331px;
+    height: 40px;
+    width: 38px;
+    left: 36px;
+}
+.Pr_back .CircularProgressbar .CircularProgressbar-path {
+    stroke: #F178B6;
+}
 .Equip_count h1,
 .Service_count h1,
 .Progression_count h1 {
+    margin-top: 10px;
+    margin-left: 15px;
     font-weight: 800;
     font-size: 24px;
     line-height: 36px;
@@ -299,6 +372,7 @@
     color: #35c75a;
 }
 .component_Equip p {
+    
     font-weight: 600;
     font-size: 14px;
     line-height: 21px;

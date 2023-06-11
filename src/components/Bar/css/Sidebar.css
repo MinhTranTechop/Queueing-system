@@ -41,7 +41,7 @@
     /* Inside auto layout */
 }
 .nav-link:hover{
-    background-color: #FF7506;
+    background-color: var(--colormain);
     color: white;
 }
 .nav a.active{

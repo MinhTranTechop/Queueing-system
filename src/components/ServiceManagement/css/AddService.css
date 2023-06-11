@@ -215,7 +215,7 @@
 .my_checkbox_update span {
     position: absolute;
     left: 234px;
-    bottom: 157px;
+    bottom: 160px;
 }
 .addSv_Checkbox label {
     margin-left: 30px;
@@ -227,7 +227,6 @@
 }
 .box_check {
     position: absolute;
-
     height: 20px;
     width: 20px;
     box-sizing: border-box;
@@ -237,6 +236,16 @@
     border: 1.5px solid #4277ff;
     border-radius: 4px;
 }
+.box_check.checked {
+   
+    background-color: blue;
+  }
+  .checkmark{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 .textaddEq1 {
     padding: 0px 0px 80px 12px;
     margin-bottom: 50px;

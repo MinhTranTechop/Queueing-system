@@ -143,17 +143,7 @@ font-size: 16px;
     
     padding-left: 10px;
 }
-.box_check {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    box-sizing: border-box;
-    background: #ffffff;
-    box-sizing: border-box;
-    margin-right: 20px;
-    border: 1.5px solid #4277ff;
-    border-radius: 4px;
-}
+
 .my_checkbox_update1 span{
     position: absolute;
 width: 27px;

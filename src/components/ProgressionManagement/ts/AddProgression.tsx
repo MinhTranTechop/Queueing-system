@@ -77,7 +77,7 @@ const AddProgression = () => {
     NameSv_Pr: nameSv,
     DateStart_Pr: currentTime,
     DateEnd_Pr: currentTimeEnd,
-    Status_Pr: "use",
+    Status_Pr: "wait",
     Produce_Pr: "Hệ thống",
     NameUsers_Pr: userName,
   });

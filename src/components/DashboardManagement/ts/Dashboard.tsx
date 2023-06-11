@@ -17,6 +17,8 @@ import DateComponent from "./DateComponent";
 import WeekComponent from "./WeekComponent";
 import MonthComponent from "./MonthComponent";
 import { Link } from "react-router-dom";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 interface WaveChartData {
   DateStart_Pr: string;
@@ -29,14 +31,19 @@ const Dashboard: React.FC = () => {
   const [count, setCount] = useState<number>();
   const [countUse, setCountUse] = useState<number>();
   const [countWait, setCountWait] = useState<number>();
-  
   const [countEq, setCountEq] = useState<number>();
   const [countActionEq, setCountActionEq] = useState<number>();
   const [countStopEq, setCountStopEq] = useState<number>();
-
   const [countSv, setCountSv] = useState<number>();
   const [countActionSv, setCountActionSv] = useState<number>();
   const [countStopSv, setCountStopSv] = useState<number>();
+  const [percentActionEq, setPercentActionEq] = useState<number>(0);
+  const [percentNotActionEq, setPercentNotActionEq] = useState<number>(0);
+  const [percentActionSv, setPercentActionSv] = useState<number>(0);
+  const [percentNotActionSv, setPercentNotActionSv] = useState<number>(0);
+  const [percentUsePr, setPercentUsePr] = useState<number>(0);
+  const [percentWaitPr, setPercentWaitPr] = useState<number>(0);
+  const [percentBackPr, setPercentBackPr] = useState<number>(0);
   const handleDateChange = (selectedDate: any) => {
     setDate(selectedDate);
   };
@@ -48,30 +55,36 @@ const Dashboard: React.FC = () => {
       // Truy vấn bảng "Progression" và lấy dữ liệu
       const snapshot = await database.ref("Progression").once("value");
       const data = snapshot.val();
-
-      
+      let percentUse = 0;
+      let percentWait = 0;
+      let percentBack =0; 
       let countBack = 0;
       let countUse = 0;
-      let countWait = 0
+      let countWait = 0;
       let count = 0;
       for (const key in data) {
         if (data[key].Status_Pr === "back") {
           countBack++;
-        } if (data[key].Status_Pr === "wait") {
+        }
+        if (data[key].Status_Pr === "wait") {
           countWait++;
-        }if (data[key].Status_Pr === "use") {
+        }
+        if (data[key].Status_Pr === "use") {
           countUse++;
         }
-         count = countUse+countBack+countWait;
+        count = countUse + countBack + countWait;
+        percentUse = Math.round(countUse*100/count);
+        percentWait = Math.round(countWait*100/count);
+        percentBack = 100 - percentUse- percentWait;
       }
-
+      setPercentUsePr(percentUse);
+      setPercentBackPr(percentBack);
+      setPercentWaitPr(percentWait);
       setCountBack(countBack);
       setCountUse(countUse);
       setCountWait(countWait);
       setCount(count);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
   const countActiveEq = async () => {
     try {
@@ -80,27 +93,28 @@ const Dashboard: React.FC = () => {
       // Truy vấn bảng "Progression" và lấy dữ liệu
       const snapshot = await database.ref("Equip").once("value");
       const data = snapshot.val();
-
-      
+      let percentActionEq = 0;
+      let percentStopEq = 0; 
       let countActionEq = 0;
       let countStopEq = 0;
-      
       let countEq = 0;
       for (const key in data) {
         if (data[key].Action_Eq === true) {
           countActionEq++;
-        } if (data[key].Action_Eq === false) {
+        }
+        if (data[key].Action_Eq === false) {
           countStopEq++;
         }
-         countEq = countActionEq+countStopEq;
+        countEq = countActionEq + countStopEq;
+        percentActionEq = Math.round(countActionEq*100/countEq);
+        percentStopEq = 100 -percentActionEq;
       }
-
-      
+      setPercentNotActionEq(percentStopEq);
+      setPercentActionEq(percentActionEq);
       setCountEq(countEq);
       setCountActionEq(countActionEq);
       setCountStopEq(countStopEq);
       console.log(`$P{}`);
-      
     } catch (error) {
       console.error("Lỗi khi đếm số lần Status_Pr:", error);
     }
@@ -112,31 +126,32 @@ const Dashboard: React.FC = () => {
       // Truy vấn bảng "Progression" và lấy dữ liệu
       const snapshot = await database.ref("Service").once("value");
       const data = snapshot.val();
-
-      
       let countSv = 0;
       let countActionSv = 0;
-      let countStopSv = 0
-      
+      let countStopSv = 0;
+      let percentActionSv = 0;
+      let percentStopSv = 0; 
       for (const key in data) {
         if (data[key].Action_Sv === true) {
           countActionSv++;
-        } if (data[key].Action_Sv === false) {
-          countStopSv++;
-      
         }
-         countSv = countActionSv+countStopSv;
+        if (data[key].Action_Sv === false) {
+          countStopSv++;
+        }
+        countSv = countActionSv + countStopSv;
+        percentActionSv = Math.round(countActionSv*100/countSv);
+        percentStopSv = 100 -percentActionSv;
       }
-
+      setPercentNotActionSv(percentStopSv);
+      setPercentActionSv(percentActionSv);
       setCountSv(countSv);
       setCountActionSv(countActionSv);
       setCountStopSv(countStopSv);
-      
     } catch (error) {
       console.error("Lỗi khi đếm số lần Status_Pr:", error);
     }
   };
-  
+
   countActiveService();
   countActiveEq();
   countActiveStatusPr();
@@ -240,8 +255,13 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="DateC">
-              {selectedOption1 === "Ngày" ? <DateComponent /> :selectedOption1 === 'Tuần' ? <WeekComponent/> :<MonthComponent/>}
-              
+              {selectedOption1 === "Ngày" ? (
+                <DateComponent />
+              ) : selectedOption1 === "Tuần" ? (
+                <WeekComponent />
+              ) : (
+                <MonthComponent />
+              )}
             </div>
           </div>
         </div>
@@ -250,83 +270,111 @@ const Dashboard: React.FC = () => {
             <span>Tổng quan</span>
           </div>
           <Link className="link_nav" to={"/ListEq"}>
-          <div className="component_Equip">
-            <div></div>
-            <div className="Equip_count">
-              <h1>{countEq}</h1>
+            <div className="component_Equip">
+              <div>
+                <div className="Eq_Action" >
+                  <CircularProgressbar key={1} value={percentActionEq} text={`${percentActionEq}%`} />
+                </div>
+                <div className="Eq_NotAction" >
+                  <CircularProgressbar key={2} value={percentNotActionEq}  />
+                </div>
+              </div>
+              <div className="Equip_count">
+                <h1>{countEq}</h1>
 
-              <p>
-               
-                <img src={item} alt="" /> Thiết bị
-              </p>
-            </div>
-            <div>
-              <div className="Equip_action">
-                <span>
-                  <span className="yellow"></span> Đang Hoạt động : <p>{countActionEq}</p>
-                </span>
+                <p>
+                  <img src={item} alt="" /> Thiết bị
+                </p>
               </div>
-              <div className="Equip_action">
-                <span>
-                  <span className="gray"></span> Ngưng hoạt động : <p>{countStopEq}</p>
-                </span>
+              <div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="yellow"></span> Đang Hoạt động :{" "}
+                    <p>{countActionEq}</p>
+                  </span>
+                </div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="gray"></span> Ngưng hoạt động :{" "}
+                    <p>{countStopEq}</p>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
           </Link>
           <Link className="link_nav" to={"/ListSv"}>
-          <div className="component_Service">
-            <div></div>
-            <div className="Service_count">
-              <h1>{countSv}</h1>
-
-              <p>
-                {" "}
-                <img src={service} alt="" /> Dịch vụ{" "}
-              </p>
-            </div>
+            <div className="component_Service">
             <div>
-              <div className="Equip_action">
-                <span>
-                  <span className="blue"></span> Đang Hoạt động : <p>{countActionSv}</p>
-                </span>
+                <div className="Sv_Action" >
+                  <CircularProgressbar key={1} value={percentActionSv} text={`${percentActionSv}%`} />
+                </div>
+                <div className="Sv_NotAction" >
+                  <CircularProgressbar key={2} value={percentNotActionSv}  />
+                </div>
               </div>
-              <div className="Equip_action">
-                <span>
-                  <span className="gray"></span> Ngưng hoạt động : <p>{countStopSv}</p>
-                </span>
+              <div className="Service_count">
+                <h1>{countSv}</h1>
+
+                <p>
+                  {" "}
+                  <img src={service} alt="" /> Dịch vụ{" "}
+                </p>
+              </div>
+              <div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="blue"></span> Đang Hoạt động :{" "}
+                    <p>{countActionSv}</p>
+                  </span>
+                </div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="gray"></span> Ngưng hoạt động :{" "}
+                    <p>{countStopSv}</p>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
           </Link>
           <Link className="link_nav" to={"/ListPr"}>
-          <div className="component_Progression">
-            <div></div>
-            <div className="Progression_count">
-              <h1>{count}</h1>
-
-              <p>
-                <img src={number} alt="" /> Cấp số
-              </p>
-            </div>
+            <div className="component_Progression">
             <div>
-              <div className="Equip_action">
-                <span>
-                  <span className="green"></span> Đã sử dụng : <p>{countUse}</p>
-                </span>
+                <div className="Pr_wait" >
+                  <CircularProgressbar key={1} value={percentWaitPr} text={`${percentWaitPr}%`} />
+                </div>
+                <div className="Pr_use" >
+                  <CircularProgressbar key={2} value={percentUsePr}  />
+                </div>
+                <div className="Pr_back" >
+                  <CircularProgressbar key={3} value={percentBackPr}  />
+                </div>
               </div>
-              <div className="Equip_action">
-                <span>
-                  <span className="gray"></span> Đang chờ : <p>{countWait}</p>
-                </span>
+              <div className="Progression_count">
+                <h1>{count}</h1>
+
+                <p>
+                  <img src={number} alt="" /> Cấp số
+                </p>
               </div>
-              <div className="Equip_action">
-                <span>
-                  <span className="pink"></span> bỏ qua : <p>{countBack}</p>
-                </span>
+              <div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="green"></span>Đang chờ : <p>{countWait}</p>
+                  </span>
+                </div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="gray"></span>  Đã sử dụng :{" "}
+                    <p>{countUse}</p>
+                  </span>
+                </div>
+                <div className="Equip_action">
+                  <span>
+                    <span className="pink"></span> bỏ qua : <p>{countBack}</p>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
           </Link>
           <div className="Date_picker">
             <Calendar
