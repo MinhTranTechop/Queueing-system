@@ -166,6 +166,7 @@ const Dashboard: React.FC = () => {
     <div>
       <Navbar />
       <Sidebar />
+    
       <div className="Dashboard_form">
         <div className="info_Dashboard">Biểu đồ cấp số</div>
         <div className="Dashboard_left">
